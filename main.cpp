@@ -17,6 +17,11 @@
 
 int main() {
 
+short num = 1;
+Big test(num);
+
+std::cout << test.getValue() << std::endl;
+std::cout << sizeof(long) << std::endl;
 
 
 

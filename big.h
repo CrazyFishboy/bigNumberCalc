@@ -15,14 +15,29 @@
 #ifndef BIG_H
 #define BIG_H
 
+#include <string>
+#include <iostream>
+
 class Big {
 
 public:
+
+Big() : Big("0") {}
+Big(std::string val);
+
+Big(unsigned long long val){
+    value = std::to_string(val);
+}
+
+std::string getValue() const {
+    return value;
+}
 
 
 
 
 private:
+    std::string value;
 
 
 

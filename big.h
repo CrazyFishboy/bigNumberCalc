@@ -33,6 +33,8 @@ std::string getValue() const {
     return value;
 }
 
+friend std::ostream& operator<<(std::ostream& out, const Big& object);
+
 
 
 

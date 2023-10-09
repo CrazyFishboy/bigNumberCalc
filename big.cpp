@@ -22,3 +22,9 @@ Big::Big(std::string val){
     }
     value = val;
 }
+
+
+std::ostream& operator<<(std::ostream& out, const Big& object){
+    out << object.getValue();
+    return out;
+}

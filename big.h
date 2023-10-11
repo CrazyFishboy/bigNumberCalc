@@ -23,15 +23,11 @@ class Big {
 public:
 
 Big() : Big("0") {}
+Big(unsigned long long val) : Big(std::to_string(val)) {}
 Big(std::string val);
+~Big();
 
-Big(unsigned long long val){
-    value = std::to_string(val);
-}
-
-std::string getValue() const {
-    return value;
-}
+std::string getValue() const;
 
 friend std::ostream& operator<<(std::ostream& out, const Big& object);
 
@@ -39,7 +35,8 @@ friend std::ostream& operator<<(std::ostream& out, const Big& object);
 
 
 private:
-    std::string value;
+    int * digits;
+    int size;
 
 
 

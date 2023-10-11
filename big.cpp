@@ -13,18 +13,38 @@
 
 
 Big::Big(std::string val){
-    for(unsigned i = 0; i < val.size(); ++i){
-        if(!std::isdigit(val[i])){
-            std::cout << val[i] << " is not a digit, setting value to 0" << std::endl;
-            value = "0";
-            return;
+    size = 0;
+    digits = nullptr;
+    if(val.size() > 0){
+        for(unsigned i = 0; i < val.size(); ++i){
+            if(!std::isdigit(val[i])){
+                std::cout << val[i] << " is not a digit, setting value to 0" << std::endl;
+                size = 1;
+                digits = new int [1] {0};
+                return;
+            }
         }
+
+        size = val.size();
+        digits = new int [size];
+        for(unsigned i = 0; i < val.size(); ++i){
+            digits[i] = val[i] - '0';
+        }
+    } else {
+        size = 1;
+        digits = new int [1] {0};
     }
-    value = val;
+}
+
+Big::~Big(){
+    delete [] digits;
+    digits = nullptr;
 }
 
 
 std::ostream& operator<<(std::ostream& out, const Big& object){
-    out << object.getValue();
+    for(int i = 0; i < object.size; ++i){
+        out << object.digits[i];
+    }
     return out;
 }

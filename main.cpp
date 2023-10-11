@@ -17,10 +17,14 @@
 
 int main() {
 
-short num = 1;
-Big test(num);
+    //long num = 1234567890;
+    std::string num = "1234";
+    Big test(num);
 
-std::cout << test << std::endl;
+    std::cout << test << std::endl;
+
+    std::cout << "Size: " << test.getSize() << std::endl; 
+    std::cout << "Digit: " << test.getDigit(1) << std::endl;
 
 
 

@@ -13,11 +13,13 @@
 
 
 Big::Big(std::string val){
+    // Initialization
     size = 0;
     digits = nullptr;
-    if(val.size() > 0){
+    if(val.size() > 0){ // Makes sure that val is non-empty
+        // Loops through each character in val, making sure that they are all digits
         for(unsigned i = 0; i < val.size(); ++i){
-            if(!std::isdigit(val[i])){
+            if(!std::isdigit(val[i])){ // Sets the value to 0 and returns if a character is not a digit
                 std::cout << val[i] << " is not a digit, setting value to 0" << std::endl;
                 size = 1;
                 digits = new int [1] {0};
@@ -25,12 +27,14 @@ Big::Big(std::string val){
             }
         }
 
+        // If all the characters are digits, set the size to that of val,
+        // then copy the digits to the array
         size = val.size();
         digits = new int [size];
         for(unsigned i = 0; i < val.size(); ++i){
             digits[i] = val[i] - '0';
         }
-    } else {
+    } else { // Sets value to 0 if val is empty
         size = 1;
         digits = new int [1] {0};
     }
@@ -69,9 +73,15 @@ Big::~Big(){
 }
 
 
+/**
+ * @brief Returns the value stored in digits as a string
+ * 
+ * @return std::string, the value as a string
+ */
 std::string Big::getValue() const {
-    if(size > 0){
+    if(size > 0 && digits != nullptr){ // makes sure digits is storing something
         std::string value = "";
+        // Adds each value to the string to be returned
         for(int i = 0; i < size; ++i){
             value += digits[size];
         }
@@ -79,8 +89,15 @@ std::string Big::getValue() const {
     } else { return "0"; }
 }
 
+
+/**
+ * @brief Returns the digit at a specific index
+ * 
+ * @param index, the index whose value is to be returned
+ * @return int, the value at the index
+ */
 int Big::getDigit(int index) const {
-    if(index >= 0 && index < size){
+    if(index >= 0 && index < size){ // Ensures that the index is within the bounds of the array
         return digits[index];
     } else {
         std::cout << "Index out of bounds" << std::endl;
@@ -89,12 +106,15 @@ int Big::getDigit(int index) const {
 }
 
 
-
-
-
-
-
+/**
+ * @brief Overloads the << operator, allowing easy display of the contents of digits
+ * 
+ * @param out, the ostream object being modified
+ * @param object, the object being added to the string
+ * @return std::ostream&, the same ostream object being modified
+ */
 std::ostream& operator<<(std::ostream& out, const Big& object){
+    // Adds each value in digits to the ostream
     for(int i = 0; i < object.size; ++i){
         out << object.digits[i];
     }

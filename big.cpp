@@ -37,6 +37,32 @@ Big::Big(std::string val){
 }
 
 
+Big::Big(const Big& right) {
+    int rightSize = right.getSize();
+    if(rightSize > 0){ // Makes sure that the right object has some value
+        if(size != rightSize){ // If this object is a different size than the right object
+            if(digits != nullptr){ // If digits points to an array
+                delete [] digits;
+            }
+
+            // Set this-> size to that of the right object and dynamically allocate a new array
+            size = rightSize;
+            digits = new int[size];
+        }
+
+        // Copy each element of the right object to this object
+        for(int i = 0; i < size; ++i){
+            digits[i] = right.getDigit(i);
+        }
+    } else { // Sets the value of this object to 0
+        if(digits != nullptr){
+            delete [] digits;
+        }
+        size = 1;
+        digits = new int [size] {0};
+    }
+}
+
 Big::~Big(){
     delete [] digits;
     digits = nullptr;

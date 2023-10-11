@@ -36,10 +36,36 @@ Big::Big(std::string val){
     }
 }
 
+
 Big::~Big(){
     delete [] digits;
     digits = nullptr;
 }
+
+
+std::string Big::getValue() const {
+    if(size > 0){
+        std::string value = "";
+        for(int i = 0; i < size; ++i){
+            value += digits[size];
+        }
+        return value;
+    } else { return "0"; }
+}
+
+int Big::getDigit(int index) const {
+    if(index >= 0 && index < size){
+        return digits[index];
+    } else {
+        std::cout << "Index out of bounds" << std::endl;
+        exit(1);
+    }
+}
+
+
+
+
+
 
 
 std::ostream& operator<<(std::ostream& out, const Big& object){

@@ -25,11 +25,18 @@ public:
 Big() : Big("0") {}
 Big(unsigned long long val) : Big(std::to_string(val)) {}
 Big(std::string val);
+Big(const Big& right);
 ~Big();
 
 std::string getValue() const;
+int getSize() const {
+    return size;
+}
+int getDigit(int index) const;
 
 friend std::ostream& operator<<(std::ostream& out, const Big& object);
+
+//add [] overload
 
 
 

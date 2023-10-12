@@ -12,6 +12,11 @@
 #include "big.h"
 
 
+/**
+ * @brief Convert constructor for big object. Takes a string representing an integer as an argument
+ * 
+ * @param val, the string representing the integer
+ */
 Big::Big(std::string val){
     // Initialization
     size = 0;
@@ -41,6 +46,11 @@ Big::Big(std::string val){
 }
 
 
+/**
+ * @brief Copy constructor for Big object. Takes an already created object as its parameter
+ * 
+ * @param right, the object being copied
+ */
 Big::Big(const Big& right) {
     int rightSize = right.getSize();
     if(rightSize > 0){ // Makes sure that the right object has some value

@@ -17,15 +17,15 @@
 
 int main() {
 
-    //long num = 1234567890;
-    std::string num = "1234";
+    std::string num = "99999999";
     Big test(num);
-
     std::cout << test << std::endl;
 
-    std::cout << "Size: " << test.getSize() << std::endl; 
-    std::cout << "Digit: " << test.getDigit(1) << std::endl;
+    ++test;
+    std::cout << test << std::endl;
 
+    ++test;
+    std::cout << test << std::endl;
 
 
 

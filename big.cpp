@@ -180,8 +180,11 @@ Big Big::operator++(){
             index = 0;
         }
         digits[index]++;
-        std::cout << digits[index] << std::endl;
+        //std::cout << digits[index] << std::endl;
     } while(digits[index] % 10 == 0 && digits[index] != 0);
+    for(int i = 0; i < size; ++i){
+        digits[i] %= 10;
+    }
     return *this;
 }
 
@@ -189,7 +192,7 @@ Big Big::operator++(){
 void Big::addDigit(int num){
     int * temp = digits;
     digits = new int [size+num];
-    for(unsigned i = 0; i < size+num; ++i){
+    for(int i = 0; i < size+num; ++i){
         if(i < num){
             *(digits+i) = 0;
         } else {
@@ -203,7 +206,7 @@ void Big::addDigit(int num){
 
 void Big::appendDigit(int num){
     int * temp = new int [size+num];
-    for(unsigned i = 0; i < size + num; ++i){
+    for(int i = 0; i < size + num; ++i){
         if(i >= size){
             *(temp+i) = 0;
         } else {

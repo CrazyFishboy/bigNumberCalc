@@ -36,12 +36,16 @@ int getDigit(int index) const;
 
 friend std::ostream& operator<<(std::ostream& out, const Big& object);
 int& operator[ ](int index);
+Big operator++();
 
-//add [] overload
+
 //add comparison operators (==, >, <, >=, <=, !=)
 //add assignment operator
 
 
+protected:
+    void addDigit(int num = 1); // Increases the size of the array by one at the beginning
+    void appendDigit(int num = 1); // Increases the size of the array by one at the end
 
 
 private:

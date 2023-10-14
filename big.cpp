@@ -131,6 +131,7 @@ std::ostream& operator<<(std::ostream& out, const Big& object){
     return out;
 }
 
+
 int& Big::operator[ ](int index){
     if(size > 0){
         if(index < size){
@@ -143,4 +144,50 @@ int& Big::operator[ ](int index){
             std::cout << "Size is 0" << std::endl;
             exit(1);
     }
+}
+
+
+Big Big::operator++(){
+    int index = size;
+    do {
+        --index;
+        if(index < 0){
+            addDigit();
+            digits[0] = 0;
+            index = 0;
+        }
+        digits[index]++;
+    } while(digits[index] % 10 == 0 && digits[index] != 0);
+    return *this;
+}
+
+
+void Big::addDigit(int num){
+    int * temp = new int [size+num];
+    for(unsigned i = 0; i < size+num; ++i){
+        if(i < num){
+            *(temp+i) = 0;
+        } else {
+            *(temp+i) = *(digits+i-num);
+        }
+    }
+    delete [] digits;
+    digits = temp;
+    size += num;
+}
+
+void Big::appendDigit(int num){
+    int * temp = new int [size+num];
+    for(unsigned i = 0; i < size; ++i){
+        *(temp+i) = *(digits+i);
+    }
+    delete [] digits;
+    digits = temp;
+    size += num;
+}
+
+
+void Big::testAdd(){
+    addDigit(5);
+    std::cout << *this << std::endl;
 }

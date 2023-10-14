@@ -35,6 +35,7 @@ int getSize() const {
 int getDigit(int index) const;
 
 friend std::ostream& operator<<(std::ostream& out, const Big& object);
+int& operator[ ](int index);
 
 //add [] overload
 //add comparison operators (==, >, <, >=, <=, !=)

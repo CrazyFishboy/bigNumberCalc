@@ -130,3 +130,17 @@ std::ostream& operator<<(std::ostream& out, const Big& object){
     }
     return out;
 }
+
+int& Big::operator[ ](int index){
+    if(size > 0){
+        if(index < size){
+            return digits[index];
+        } else {
+            std::cout << "Index out of bounds" << std::endl;
+            exit(1);
+        }
+    } else {
+            std::cout << "Size is 0" << std::endl;
+            exit(1);
+    }
+}

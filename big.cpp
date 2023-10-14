@@ -178,8 +178,12 @@ void Big::addDigit(int num){
 
 void Big::appendDigit(int num){
     int * temp = new int [size+num];
-    for(unsigned i = 0; i < size; ++i){
-        *(temp+i) = *(digits+i);
+    for(unsigned i = 0; i < size + num; ++i){
+        if(i >= size){
+            *(temp+i) = 0;
+        } else {
+            *(temp+i) = *(digits+i);
+        }
     }
     delete [] digits;
     digits = temp;
@@ -188,6 +192,6 @@ void Big::appendDigit(int num){
 
 
 void Big::testAdd(){
-    addDigit(5);
+    appendDigit(5);
     std::cout << *this << std::endl;
 }

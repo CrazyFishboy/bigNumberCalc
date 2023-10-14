@@ -46,11 +46,33 @@ Big::Big(std::string val){
 }
 
 
+Big::Big(const Big& right) {
+    int rightSize = right.getSize();
+    if(rightSize > 0){ // Makes sure that the right object has some value
+
+        // Set this-> size to that of the right object and dynamically allocate a new array
+        size = rightSize;
+        digits = new int[size];
+
+        // Copy each element of the right object to this object
+        for(int i = 0; i < size; ++i){
+            digits[i] = right.getDigit(i);
+        }
+    } else { // Sets the value of this object to 0
+        size = 1;
+        digits = new int [size] {0};
+    }
+}
+
+
+
+//This needs to become the assignment operator
 /**
  * @brief Copy constructor for Big object. Takes an already created object as its parameter
  * 
  * @param right, the object being copied
  */
+/*
 Big::Big(const Big& right) {
     int rightSize = right.getSize();
     if(rightSize > 0){ // Makes sure that the right object has some value
@@ -76,6 +98,7 @@ Big::Big(const Big& right) {
         digits = new int [size] {0};
     }
 }
+*/
 
 Big::~Big(){
     delete [] digits;
@@ -157,22 +180,24 @@ Big Big::operator++(){
             index = 0;
         }
         digits[index]++;
+        std::cout << digits[index] << std::endl;
     } while(digits[index] % 10 == 0 && digits[index] != 0);
     return *this;
 }
 
 
 void Big::addDigit(int num){
-    int * temp = new int [size+num];
+    int * temp = digits;
+    digits = new int [size+num];
     for(unsigned i = 0; i < size+num; ++i){
         if(i < num){
-            *(temp+i) = 0;
+            *(digits+i) = 0;
         } else {
-            *(temp+i) = *(digits+i-num);
+            *(digits+i) = *(temp+i-num);
         }
     }
-    delete [] digits;
-    digits = temp;
+    delete [] temp;
+    temp = nullptr;
     size += num;
 }
 
@@ -188,10 +213,4 @@ void Big::appendDigit(int num){
     delete [] digits;
     digits = temp;
     size += num;
-}
-
-
-void Big::testAdd(){
-    appendDigit(5);
-    std::cout << *this << std::endl;
 }

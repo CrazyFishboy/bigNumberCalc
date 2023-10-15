@@ -181,7 +181,7 @@ int& Big::operator[ ](int index){
  * @brief Overloaded prefix ++ operator. Increases the total value of the digits array
  * by 1, starting from the last element
  * 
- * @return Big, a copy of this object
+ * @return Big, a reference to this object
  */
 Big& Big::operator++(){
     int index = size;
@@ -202,6 +202,12 @@ Big& Big::operator++(){
 }
 
 
+/**
+ * @brief Overloads postfix ++ operator. Increases the total value of the digits array
+ * by 1, starting from the last element
+ * 
+ * @return Big, a copy of this object made before incrementing it
+ */
 Big Big::operator++(int){
     Big temp = *this;
     int index = size;
@@ -221,31 +227,53 @@ Big Big::operator++(int){
     return temp;
 }
 
+
+
+/**
+ * @brief Increases the size of the array, with all the new elements
+ * at the beginning of the array
+ * 
+ * @param num, the number of elements to increase the array by
+ */
 void Big::addDigit(int num){
-    int * temp = digits;
-    digits = new int [size+num];
+    int * temp = digits; // Holds the address of the current array
+    digits = new int [size+num]; // Allocates a new array of the correct size
+
+    // Copies all of the elements from the old array to the new one
     for(int i = 0; i < size+num; ++i){
-        if(i < num){
+        if(i < num){ // If the elements are before the start of the old array, fill with 0's
             *(digits+i) = 0;
         } else {
             *(digits+i) = *(temp+i-num);
         }
     }
+    // Frees the old array
     delete [] temp;
     temp = nullptr;
     size += num;
 }
 
+
+
+/**
+ * @brief Increases the size of the array, with all the new elements
+ * at the end of the array
+ * 
+ * @param num, the number of elements to increase the array by
+ */
 void Big::appendDigit(int num){
-    int * temp = new int [size+num];
+    int * temp = new int [size+num]; // The new array
+
+    // Copies the old elements to the new array
     for(int i = 0; i < size + num; ++i){
-        if(i >= size){
+        if(i >= size){ // Add trailing zeros
             *(temp+i) = 0;
         } else {
             *(temp+i) = *(digits+i);
         }
     }
-    delete [] digits;
-    digits = temp;
+
+    delete [] digits; // Frees the old array
+    digits = temp; // Updates the pointer, to point to the new array
     size += num;
 }

@@ -40,6 +40,9 @@ Big& operator++();
 Big operator++(int);
 
 
+void add(const Big& right);
+
+
 //add comparison operators (==, >, <, >=, <=, !=)
 //add assignment operator
 

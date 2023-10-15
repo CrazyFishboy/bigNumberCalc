@@ -229,6 +229,55 @@ Big Big::operator++(int){
 
 
 
+void Big::add(const Big& right){
+    int rSize = right.getSize();
+    if(rSize > 0 && this->size > 0){
+        if(rSize > this->size){
+            addDigit(rSize-(this->size));
+        }
+        int indexL = this->size -1; // This object
+        int indexR = rSize - 1; // Other object
+        int overflow = 0; // When left + right > 9, this is extra above 9
+
+        while(indexL >= 0){
+            if(indexR >= 0){
+                digits[indexL] += right.getDigit(indexR) + overflow;
+                overflow = digits[indexL] / 10;
+                digits[indexL] %= 10;
+            } else if(overflow > 0){
+                digits[indexL] += overflow;
+                overflow = digits[indexL] / 10;
+                digits[indexL] %= 10;
+            } else {
+                break;
+            }
+            --indexL;
+            --indexR;
+            if(indexL < 0 && indexR >= 0){
+                addDigit();
+                indexL = 0;
+            }
+            if(indexL == 0){
+                if(indexR >= 0){
+                    int temp = digits[indexL] + right.getDigit(indexR) + overflow;
+                    if(temp > 9){
+                        addDigit();
+                        indexL = 1;
+                    }
+                } else {
+                    int temp = digits[indexL] + overflow;
+                    if(temp > 9){
+                        addDigit();
+                        indexL = 1;
+                    }
+                }
+            }
+        }   
+    }
+}
+
+
+
 /**
  * @brief Increases the size of the array, with all the new elements
  * at the beginning of the array

@@ -17,14 +17,13 @@
 
 int main() {
 
-    std::string num = "99999999";
+    std::string num = "9999999";
     Big test(num);
+    Big test2("999999999999999");
     std::cout << test << std::endl;
+    std::cout << test2 << std::endl;
 
-    ++test;
-    std::cout << test << std::endl;
-
-    ++test;
+    test.add(test2);
     std::cout << test << std::endl;
 
 

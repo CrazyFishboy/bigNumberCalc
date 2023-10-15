@@ -36,7 +36,8 @@ int getDigit(int index) const;
 
 friend std::ostream& operator<<(std::ostream& out, const Big& object);
 int& operator[ ](int index);
-Big operator++();
+Big& operator++();
+Big operator++(int);
 
 
 //add comparison operators (==, >, <, >=, <=, !=)

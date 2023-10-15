@@ -155,9 +155,16 @@ std::ostream& operator<<(std::ostream& out, const Big& object){
 }
 
 
+/**
+ * @brief Overload [] operator. Returns the value of the digits
+ * array at the specified index
+ * 
+ * @param index, the desired index
+ * @return int&, a reference to the value stored at the specified index
+ */
 int& Big::operator[ ](int index){
-    if(size > 0){
-        if(index < size){
+    if(size > 0){ // Ensures that there is something in the array
+        if(index >= 0 && index < size){ // Ensures the bounds of the array are not exceeded
             return digits[index];
         } else {
             std::cout << "Index out of bounds" << std::endl;
@@ -170,7 +177,13 @@ int& Big::operator[ ](int index){
 }
 
 
-Big Big::operator++(){
+/**
+ * @brief Overloaded prefix ++ operator. Increases the total value of the digits array
+ * by 1, starting from the last element
+ * 
+ * @return Big, a copy of this object
+ */
+Big& Big::operator++(){
     int index = size;
     do {
         --index;
@@ -188,6 +201,25 @@ Big Big::operator++(){
     return *this;
 }
 
+
+Big Big::operator++(int){
+    Big temp = *this;
+    int index = size;
+    do {
+        --index;
+        if(index < 0){
+            addDigit();
+            digits[0] = 0;
+            index = 0;
+        }
+        digits[index]++;
+        //std::cout << digits[index] << std::endl;
+    } while(digits[index] % 10 == 0 && digits[index] != 0);
+    for(int i = 0; i < size; ++i){
+        digits[i] %= 10;
+    }
+    return temp;
+}
 
 void Big::addDigit(int num){
     int * temp = digits;

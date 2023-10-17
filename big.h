@@ -40,7 +40,9 @@ Big& operator++();
 Big operator++(int);
 bool operator==(const Big& object) const;
 bool operator>(const Big& object) const;
+bool operator>=(const Big& object) const;
 bool operator<(const Big& object) const;
+bool operator<=(const Big& object) const;
 
 
 void add(const Big& right);

@@ -275,6 +275,24 @@ bool Big::operator>(const Big& object) const {
     }
 }
 
+
+bool Big::operator>=(const Big& object) const {
+    if(size > object.getSize()) {
+        return true;
+    } else if(size < object.getSize()){
+        return false;
+    } else {
+        for(int i = 0; i < size; ++i){
+            if(digits[i] > object.getDigit(i)){
+                return true;
+            } else if(digits[i] < object.getDigit(i)){
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
 bool Big::operator<(const Big& object) const {
     if(size > object.getSize()) {
         return false;
@@ -289,6 +307,24 @@ bool Big::operator<(const Big& object) const {
             }
         }
         return false;
+    }
+}
+
+
+bool Big::operator<=(const Big& object) const {
+    if(size > object.getSize()) {
+        return false;
+    } else if(size < object.getSize()){
+        return true;
+    } else {
+        for(int i = 0; i < size; ++i){
+            if(digits[i] > object.getDigit(i)){
+                return false;
+            } else if(digits[i] < object.getDigit(i)){
+                return true;
+            }
+        }
+        return true;
     }
 }
 

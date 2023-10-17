@@ -259,7 +259,20 @@ bool Big::operator==(const Big& object) const{
 
 
 bool Big::operator>(const Big& object) const {
-    ;
+    if(size > object.getSize()) {
+        return true;
+    } else if(size < object.getSize()){
+        return false;
+    } else {
+        for(int i = 0; i < size; ++i){
+            if(digits[i] > object.getDigit(i)){
+                return true;
+            } else if(digits[i] < object.getDigit(i)){
+                return false;
+            }
+        }
+        return false;
+    }
 }
 
 

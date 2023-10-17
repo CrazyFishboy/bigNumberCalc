@@ -23,21 +23,37 @@ Big::Big(std::string val){
     digits = nullptr;
     if(val.size() > 0){ // Makes sure that val is non-empty
         // Loops through each character in val, making sure that they are all digits
+        bool nonZeroFound = false;
+        int startIndex = 0;
         for(unsigned i = 0; i < val.size(); ++i){
             if(!std::isdigit(val[i])){ // Sets the value to 0 and returns if a character is not a digit
                 std::cout << val[i] << " is not a digit, setting value to 0" << std::endl;
                 size = 1;
                 digits = new int [1] {0};
                 return;
+            } else {
+                if(!nonZeroFound){
+                    if(val[i] != '0'){
+                        nonZeroFound = true;
+                        startIndex = i;
+                    }
+                }
             }
         }
 
+
+
         // If all the characters are digits, set the size to that of val,
         // then copy the digits to the array
-        size = val.size();
-        digits = new int [size];
-        for(unsigned i = 0; i < val.size(); ++i){
-            digits[i] = val[i] - '0';
+        if(nonZeroFound){
+            size = val.size() - startIndex;
+            digits = new int [size];
+            for(unsigned i = startIndex, digitIndex = 0; i < val.size(); ++i, ++digitIndex){
+                digits[digitIndex] = val[i] - '0';
+            }
+        } else {
+            size = 1;
+            digits = new int [1] {0};
         }
     } else { // Sets value to 0 if val is empty
         size = 1;
@@ -241,6 +257,10 @@ bool Big::operator==(const Big& object) const{
     }
 }
 
+
+bool Big::operator>(const Big& object) const {
+    ;
+}
 
 
 void Big::add(const Big& right){

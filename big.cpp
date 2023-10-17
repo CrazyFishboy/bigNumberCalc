@@ -193,6 +193,43 @@ int& Big::operator[ ](int index){
 }
 
 
+Big operator+(const Big& left, const Big& right){
+    int lSize = left.getSize();
+    int rSize = right.getSize();
+    if(rSize > 0 && lSize > 0){
+
+        std::string value = "";
+        int indexL = lSize -1; // left object
+        int indexR = rSize - 1; // Other object
+        int overflow = 0; // When left + right > 9, this is extra above 9
+        int working = 0;
+
+        while(indexL >= 0){
+            if(indexR >= 0){
+                working = left.getDigit(indexL) + right.getDigit(indexR) + overflow;
+                overflow = working / 10;
+                working %= 10;
+                value = std::to_string(working) + value;
+            } else if(overflow > 0){
+                working = left.getDigit(indexL) + overflow;
+                overflow = working / 10;
+                working %= 10;
+                value = std::to_string(working) + value;
+            } else {
+                working = left.getDigit(indexL);
+                value = std::to_string(working) + value;
+            }
+            --indexL;
+            --indexR;
+        }   
+        std::cout << value << std::endl;
+        return Big(value);
+    } else {
+        return (Big("0"));
+    }
+}
+
+
 /**
  * @brief Overloaded prefix ++ operator. Increases the total value of the digits array
  * by 1, starting from the last element

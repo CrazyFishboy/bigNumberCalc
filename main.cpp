@@ -17,7 +17,7 @@
 
 int main() {
 
-    std::string num = "00";
+    std::string num = "";
     Big test(num);
     Big test2("1");
     std::cout << test << std::endl;
@@ -42,6 +42,8 @@ int main() {
         std::cout << "Test 1 is less than or equal to test 2" << std::endl;
     }
 
+    
+    test + test2;
     test.add(test2);
     std::cout << test << std::endl;
 

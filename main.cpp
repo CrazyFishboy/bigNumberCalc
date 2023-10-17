@@ -17,14 +17,17 @@
 
 int main() {
 
-    std::string num = "0022";
+    std::string num = "00";
     Big test(num);
-    Big test2("23");
+    Big test2("1");
     std::cout << test << std::endl;
     std::cout << test2 << std::endl;
 
     if(test == test2){
         std::cout << "They are equal" << std::endl;
+    }
+    if(test != test2){
+        std::cout << "They are not equal" << std::endl;
     }
     if(test > test2){
         std::cout << "Test 1 is greater than test 2" << std::endl;

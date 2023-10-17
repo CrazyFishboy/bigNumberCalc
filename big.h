@@ -39,6 +39,7 @@ int& operator[ ](int index);
 Big& operator++();
 Big operator++(int);
 bool operator==(const Big& object) const;
+bool operator!=(const Big& object) const;
 bool operator>(const Big& object) const;
 bool operator>=(const Big& object) const;
 bool operator<(const Big& object) const;

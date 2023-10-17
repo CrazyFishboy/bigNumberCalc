@@ -38,6 +38,7 @@ friend std::ostream& operator<<(std::ostream& out, const Big& object);
 int& operator[ ](int index);
 Big& operator++();
 Big operator++(int);
+bool operator==(const Big& object) const;
 
 
 void add(const Big& right);

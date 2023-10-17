@@ -228,6 +228,20 @@ Big Big::operator++(int){
 }
 
 
+bool Big::operator==(const Big& object) const{
+    if(this->size != object.getSize()){
+        return false;
+    } else {
+        for(int i = 0; i < this->size; ++i){
+            if(digits[i] != object.getDigit(i)){
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+
 
 void Big::add(const Big& right){
     int rSize = right.getSize();

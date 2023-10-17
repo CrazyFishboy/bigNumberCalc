@@ -275,6 +275,23 @@ bool Big::operator>(const Big& object) const {
     }
 }
 
+bool Big::operator<(const Big& object) const {
+    if(size > object.getSize()) {
+        return false;
+    } else if(size < object.getSize()){
+        return true;
+    } else {
+        for(int i = 0; i < size; ++i){
+            if(digits[i] > object.getDigit(i)){
+                return false;
+            } else if(digits[i] < object.getDigit(i)){
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
 
 void Big::add(const Big& right){
     int rSize = right.getSize();

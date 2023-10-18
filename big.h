@@ -22,37 +22,39 @@ class Big {
 
 public:
 
-Big() : Big("0") {}
-Big(unsigned long long val) : Big(std::to_string(val)) {}
-Big(std::string val);
-Big(const Big& right);
-~Big();
+    Big() : Big("0") {}
+    Big(unsigned long long val) : Big(std::to_string(val)) {}
+    Big(std::string val);
+    Big(const Big& right);
+    ~Big();
 
-std::string getValue() const;
-int getSize() const {
-    return size;
-}
-int getDigit(int index) const;
+    std::string getValue() const;
+    int getSize() const {
+        return size;
+    }
+    int getDigit(int index) const;
 
-friend std::ostream& operator<<(std::ostream& out, const Big& object);
-int& operator[ ](int index);
-void operator=(const Big& right);
-friend Big operator+(const Big& left, const Big& right);
-Big& operator++();
-Big operator++(int);
-bool operator==(const Big& object) const;
-bool operator!=(const Big& object) const;
-bool operator>(const Big& object) const;
-bool operator>=(const Big& object) const;
-bool operator<(const Big& object) const;
-bool operator<=(const Big& object) const;
+    friend std::ostream& operator<<(std::ostream& out, const Big& object);
+    int& operator[ ](int index);
+
+    // Assignment operator
+    void operator=(const Big& right);
+
+    // Arithmetic operators
+    friend Big operator+(const Big& left, const Big& right);
+    Big& operator++();
+    Big operator++(int);
+
+    // Comparison operators
+    bool operator==(const Big& object) const;
+    bool operator!=(const Big& object) const;
+    bool operator>(const Big& object) const;
+    bool operator>=(const Big& object) const;
+    bool operator<(const Big& object) const;
+    bool operator<=(const Big& object) const;
 
 
-void add(const Big& right);
-
-
-//add assignment operator
-
+    void add(const Big& right);
 
 protected:
     void addDigit(int num = 1); // Increases the size of the array by one at the beginning

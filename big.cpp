@@ -205,11 +205,10 @@ int& Big::operator[ ](int index){
 Big operator+(const Big& left, const Big& right){
     int lSize = left.getSize(); // Stores the size of the left object, so repeated calls do not need to be performed
     int rSize = right.getSize(); // Same thing but with the right object
-    if(rSize > lSize){
+    if(rSize > lSize){ // Ensures that the left object is always >= right object, in size
         return right + left;
     }
     if(rSize > 0 && lSize > 0){ // Makes sure that both objects store a value
-
         std::string value = ""; // Stores the sum as a string. Used as the constructor paramenter for the return object
         int indexL = lSize -1; // left object
         int indexR = rSize - 1; // Other object
@@ -217,25 +216,27 @@ Big operator+(const Big& left, const Big& right){
         int working = 0; // The working sum. Stores the sum of overflow, left, and right, before operations
 
         while(indexL >= 0){ // Loops through each object 
-            if(indexR >= 0){
-                working = left.getDigit(indexL) + right.getDigit(indexR) + overflow;
+            if(indexR >= 0){ // If there is still a value in the right object
+                working = left.getDigit(indexL) + right.getDigit(indexR) + overflow; // Get the sum
+                overflow = working / 10; // Find value for next power of 10
+                working %= 10; // Find leftover for this value
+                value = std::to_string(working) + value; // Add value to string
+            } else if(overflow > 0){ // If there are no more values in right object, but still values in overflow
+                working = left.getDigit(indexL) + overflow; // Sums left and overflow
                 overflow = working / 10;
                 working %= 10;
                 value = std::to_string(working) + value;
-            } else if(overflow > 0){
-                working = left.getDigit(indexL) + overflow;
-                overflow = working / 10;
-                working %= 10;
-                value = std::to_string(working) + value;
-            } else {
+            } else { // If there are only values left in the left object
                 working = left.getDigit(indexL);
                 value = std::to_string(working) + value;
             }
             --indexL;
             --indexR;
         }   
-        std::cout << value << std::endl;
-        return Big(value);
+        /*********************************/
+        std::cout << value << std::endl; // Temporary until assignment operator is finished
+        /********************************/
+        return Big(value); // Creates a big object with the sum as its value
     } else {
         return (Big("0"));
     }

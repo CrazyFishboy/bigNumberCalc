@@ -29,9 +29,7 @@ public:
     ~Big();
 
     std::string getValue() const;
-    int getSize() const {
-        return size;
-    }
+    int getSize() const { return size; }
     int getDigit(int index) const;
 
     friend std::ostream& operator<<(std::ostream& out, const Big& object);

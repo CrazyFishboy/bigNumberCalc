@@ -159,7 +159,11 @@ int& Big::operator[ ](int index){
 }
 
 
-
+/**
+ * @brief Assigns the value of the right object to this object
+ * 
+ * @param right, the object being copied
+ */
 void Big::operator=(const Big& right){
     int rightSize = right.getSize();
     if(rightSize > 0){ // Makes sure that the right object has some value
@@ -311,8 +315,15 @@ bool Big::operator==(const Big& object) const{
 
 
 
+/**
+ * @brief Checks whether this object is not equal to another object
+ * 
+ * @param object, the object comparing with
+ * @return true, the objects are not equal
+ * @return false, the objects are equal
+ */
 bool Big::operator!=(const Big& object) const{
-    if(this->size != object.getSize()){
+    if(this->size != object.getSize()){ // If they are not the same size, they can not possibly be qual
         return true;
     } else {
         for(int i = 0; i < this->size; ++i){
@@ -325,12 +336,20 @@ bool Big::operator!=(const Big& object) const{
 }
 
 
+/**
+ * @brief Checks whether this object is greater than a provided object
+ * 
+ * @param object, the object comparing with
+ * @return true, this object is greater
+ * @return false, this object is equal to or less than the other
+ */
 bool Big::operator>(const Big& object) const {
-    if(size > object.getSize()) {
+    if(size > object.getSize()){ // If this object is greater in size, it must be greater in value
         return true;
-    } else if(size < object.getSize()){
+    } else if(size < object.getSize()){ // Likewise, if it is smaller in size, it must be lesser in value
         return false;
     } else {
+        // For loop ends early if the two digits are not the same
         for(int i = 0; i < size; ++i){
             if(digits[i] > object.getDigit(i)){
                 return true;
@@ -338,11 +357,20 @@ bool Big::operator>(const Big& object) const {
                 return false;
             }
         }
+        // If the loop does not end early, the objects must be the same, meaning
+        // that this object is not greater
         return false;
     }
 }
 
 
+/**
+ * @brief Checks whether this object is greater than or equal to a provided object
+ * 
+ * @param object, the object comparing with
+ * @return true, this object is greater than or equal to the provided one
+ * @return false, this object is less than the provided object
+ */
 bool Big::operator>=(const Big& object) const {
     if(size > object.getSize()) {
         return true;
@@ -360,6 +388,9 @@ bool Big::operator>=(const Big& object) const {
     }
 }
 
+
+
+
 bool Big::operator<(const Big& object) const {
     if(size > object.getSize()) {
         return false;
@@ -376,6 +407,7 @@ bool Big::operator<(const Big& object) const {
         return false;
     }
 }
+
 
 
 bool Big::operator<=(const Big& object) const {
@@ -396,22 +428,31 @@ bool Big::operator<=(const Big& object) const {
 }
 
 
+
+/**
+ * @brief Adds the value of another Big object to this one
+ * 
+ * @param right, the object whose value is being added to this one
+ */
 void Big::add(const Big& right){
-    int rSize = right.getSize();
-    if(rSize > 0 && this->size > 0){
-        if(rSize > this->size){
+    int rSize = right.getSize(); // Saves the size of the right object for future use
+    if(rSize > 0 && this->size > 0){ // Makes sure that both objects have a value
+        if(rSize > this->size){ // Preemptively increases the size of this object's array if the other object is larger in size
             addDigit(rSize-(this->size));
         }
-        int indexL = this->size -1; // This object
-        int indexR = rSize - 1; // Other object
-        int overflow = 0; // When left + right > 9, this is extra above 9
+        int indexL = this->size -1; // Index for this object's array
+        int indexR = rSize - 1; // Index for the right object's array
+        int overflow = 0; // When left + right > 9, this is extra above 9, so the max value stored in array is 9
 
-        while(indexL >= 0){
-            if(indexR >= 0){
+        while(indexL >= 0){ // Loops through every element of this object's array
+            if(indexR >= 0){ // If there are still values in the right object
+                // Adds the right object's value at the index as well as the overflow from the previous
+                // index to this object's array
                 digits[indexL] += right.getDigit(indexR) + overflow;
+                // Removes excess over 9, and stores it for the next index
                 overflow = digits[indexL] / 10;
                 digits[indexL] %= 10;
-            } else if(overflow > 0){
+            } else if(overflow > 0){ // If there are no values left in the right object, but still a value in overflow
                 digits[indexL] += overflow;
                 overflow = digits[indexL] / 10;
                 digits[indexL] %= 10;
@@ -420,18 +461,20 @@ void Big::add(const Big& right){
             }
             --indexL;
             --indexR;
-            if(indexL < 0 && indexR >= 0){
+
+            // Array sizing management
+            if(indexL < 0 && indexR >= 0){ // If the end of this object's array has been reached, and the right object still has more values
                 addDigit();
                 indexL = 0;
             }
             if(indexL == 0){
-                if(indexR >= 0){
+                if(indexR >= 0){ // Checks whether overflow will occur in the next operation
                     int temp = digits[indexL] + right.getDigit(indexR) + overflow;
                     if(temp > 9){
                         addDigit();
                         indexL = 1;
                     }
-                } else {
+                } else { // Checks if overflow will occur in the next operation, if the end of the right object has been reached
                     int temp = digits[indexL] + overflow;
                     if(temp > 9){
                         addDigit();

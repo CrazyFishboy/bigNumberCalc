@@ -193,18 +193,30 @@ int& Big::operator[ ](int index){
 }
 
 
+/**
+ * @brief Adds the two values provided as arguments and stores them in a third object, which
+ * it returns
+ * 
+ * @param left, the object on the left side of the plus sign 
+ * @param right, the object on the right side of the plus sign
+ *      example: left + right
+ * @return Big, the object being returned. Stores the sum of left and right
+ */
 Big operator+(const Big& left, const Big& right){
-    int lSize = left.getSize();
-    int rSize = right.getSize();
-    if(rSize > 0 && lSize > 0){
+    int lSize = left.getSize(); // Stores the size of the left object, so repeated calls do not need to be performed
+    int rSize = right.getSize(); // Same thing but with the right object
+    if(rSize > lSize){
+        return right + left;
+    }
+    if(rSize > 0 && lSize > 0){ // Makes sure that both objects store a value
 
-        std::string value = "";
+        std::string value = ""; // Stores the sum as a string. Used as the constructor paramenter for the return object
         int indexL = lSize -1; // left object
         int indexR = rSize - 1; // Other object
         int overflow = 0; // When left + right > 9, this is extra above 9
-        int working = 0;
+        int working = 0; // The working sum. Stores the sum of overflow, left, and right, before operations
 
-        while(indexL >= 0){
+        while(indexL >= 0){ // Loops through each object 
             if(indexR >= 0){
                 working = left.getDigit(indexL) + right.getDigit(indexR) + overflow;
                 overflow = working / 10;

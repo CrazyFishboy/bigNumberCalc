@@ -81,7 +81,9 @@ Big::Big(const Big& right) {
 
 
 Big::~Big(){
-    delete [] digits;
+    if(digits != nullptr){
+        delete [] digits;
+    }
     digits = nullptr;
 }
 

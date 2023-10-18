@@ -41,8 +41,6 @@ Big::Big(std::string val){
             }
         }
 
-
-
         // If all the characters are digits, set the size to that of val,
         // then copy the digits to the array
         if(nonZeroFound){

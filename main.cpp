@@ -17,9 +17,9 @@
 
 int main() {
 
-    std::string num = "";
+    std::string num = "27";
     Big test(num);
-    Big test2("1");
+    Big test2("50098");
     std::cout << test << std::endl;
     std::cout << test2 << std::endl;
 
@@ -43,8 +43,7 @@ int main() {
     }
 
     
-    test + test2;
-    test.add(test2);
+    test = test + test2;
     std::cout << test << std::endl;
 
 

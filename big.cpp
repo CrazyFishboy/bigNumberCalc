@@ -82,40 +82,6 @@ Big::Big(const Big& right) {
 
 
 
-//This needs to become the assignment operator
-/**
- * @brief Copy constructor for Big object. Takes an already created object as its parameter
- * 
- * @param right, the object being copied
- */
-/*
-Big::Big(const Big& right) {
-    int rightSize = right.getSize();
-    if(rightSize > 0){ // Makes sure that the right object has some value
-        if(size != rightSize){ // If this object is a different size than the right object
-            if(digits != nullptr){ // If digits points to an array
-                delete [] digits;
-            }
-
-            // Set this-> size to that of the right object and dynamically allocate a new array
-            size = rightSize;
-            digits = new int[size];
-        }
-
-        // Copy each element of the right object to this object
-        for(int i = 0; i < size; ++i){
-            digits[i] = right.getDigit(i);
-        }
-    } else { // Sets the value of this object to 0
-        if(digits != nullptr){
-            delete [] digits;
-        }
-        size = 1;
-        digits = new int [size] {0};
-    }
-}
-*/
-
 Big::~Big(){
     delete [] digits;
     digits = nullptr;
@@ -193,6 +159,36 @@ int& Big::operator[ ](int index){
 }
 
 
+
+void Big::operator=(const Big& right){
+    int rightSize = right.getSize();
+    if(rightSize > 0){ // Makes sure that the right object has some value
+        if(size != rightSize){ // If this object is a different size than the right object
+            if(digits != nullptr){ // If digits points to an array
+                delete [] digits;
+            }
+
+            // Set this-> size to that of the right object and dynamically allocate a new array
+            size = rightSize;
+            digits = new int[size];
+        }
+
+        // Copy each element of the right object to this object
+        for(int i = 0; i < size; ++i){
+            digits[i] = right.getDigit(i);
+        }
+    } else { // Sets the value of this object to 0
+        if(digits != nullptr){
+            delete [] digits;
+        }
+        size = 1;
+        digits = new int [size] {0};
+    }
+}
+
+
+
+
 /**
  * @brief Adds the two values provided as arguments and stores them in a third object, which
  * it returns
@@ -233,9 +229,6 @@ Big operator+(const Big& left, const Big& right){
             --indexL;
             --indexR;
         }   
-        /*********************************/
-        std::cout << value << std::endl; // Temporary until assignment operator is finished
-        /********************************/
         return Big(value); // Creates a big object with the sum as its value
     } else {
         return (Big("0"));
@@ -294,10 +287,19 @@ Big Big::operator++(int){
 }
 
 
+
+/**
+ * @brief Allows comparison between two big objects, as to whether they store equal values
+ * 
+ * @param object, the object being compared to the current one
+ * @return true, they are the same
+ * @return false, they are not the same
+ */
 bool Big::operator==(const Big& object) const{
-    if(this->size != object.getSize()){
+    if(this->size != object.getSize()){ // If the two objects are different sizes, there is no way for them to be the same value
         return false;
     } else {
+        // Checks each value in each array, as to whether they are the same
         for(int i = 0; i < this->size; ++i){
             if(digits[i] != object.getDigit(i)){
                 return false;

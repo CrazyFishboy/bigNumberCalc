@@ -240,6 +240,52 @@ Big operator+(const Big& left, const Big& right){
 }
 
 
+Big operator*(const Big& left, const Big& right){
+    int lSize = left.getSize();
+    int rSize = right.getSize();
+    if(rSize > lSize){
+        return right * left;
+    }
+    const int productsSize = 20; // Number of elements in the products array
+    Big * products = new Big [productsSize];
+    int productsIndex = 0; // Current index in products array
+    for(int leftIndex = lSize - 1; leftIndex >= 0; --leftIndex){
+        for(int rightIndex = rSize -1; rightIndex >= 0; --rightIndex){
+            if(productsIndex >= productsSize){
+                for(productsIndex = productsSize - 1; productsIndex >0; --productsIndex){
+                    products[productsIndex-1] = products[productsIndex-1] + products[productsIndex];
+                }
+            }
+            Big leftVal = left.getDigit(leftIndex);
+            int leftPower = lSize - 1 - leftIndex;
+            leftVal.appendDigit(leftPower);
+
+            Big rightVal = right.getDigit(rightIndex);
+            int rightPower = rSize - 1 - rightIndex;
+            rightVal.appendDigit(rightPower);
+
+            int product = left.getDigit(leftIndex) * right.getDigit(rightIndex);
+            Big tempProduct(product);
+            tempProduct.appendDigit(leftPower + rightPower);
+            products[productsIndex] = tempProduct;
+            
+            std::cout << left.getDigit(leftIndex) << " ( " << leftVal << " ) * " << right.getDigit(rightIndex) << " ( " 
+            << rightVal << " ) = " << products[productsIndex] << std::endl;
+            ++productsIndex;
+        }
+    }
+    for(int i = 0; i < productsIndex; ++i){
+        std::cout << products[i];
+        if(i >= productsIndex -1){
+            std::cout << std::endl;
+        } else {
+            std::cout << ',' << std::flush;
+        }
+    }
+    return Big(products[0]);
+}
+
+
 /**
  * @brief Overloaded prefix ++ operator. Increases the total value of the digits array
  * by 1, starting from the last element

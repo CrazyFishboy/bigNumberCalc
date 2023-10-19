@@ -40,6 +40,7 @@ public:
 
     // Arithmetic operators
     friend Big operator+(const Big& left, const Big& right);
+    friend Big operator*(const Big& left, const Big& right);
     Big& operator++();
     Big operator++(int);
 

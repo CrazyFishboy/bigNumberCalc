@@ -215,19 +215,21 @@ Big operator+(const Big& left, const Big& right){
         int overflow = 0; // When left + right > 9, this is extra above 9
         int working = 0; // The working sum. Stores the sum of overflow, left, and right, before operations
 
-        while(indexL >= 0){ // Loops through each object 
+        while(indexL >= 0 || overflow > 0){ // Loops through each object 
             if(indexR >= 0){ // If there is still a value in the right object
                 working = left.getDigit(indexL) + right.getDigit(indexR) + overflow; // Get the sum
                 overflow = working / 10; // Find value for next power of 10
                 working %= 10; // Find leftover for this value
                 value = std::to_string(working) + value; // Add value to string
-            } else if(overflow > 0){ // If there are no more values in right object, but still values in overflow
+            } else if(indexL >= 0){ // If there are no more values in right object, but still values in overflow
                 working = left.getDigit(indexL) + overflow; // Sums left and overflow
                 overflow = working / 10;
                 working %= 10;
                 value = std::to_string(working) + value;
             } else { // If there are only values left in the left object
-                working = left.getDigit(indexL);
+                working = overflow;
+                overflow /= 10;
+                working %= 10;
                 value = std::to_string(working) + value;
             }
             --indexL;
@@ -252,9 +254,10 @@ Big operator*(const Big& left, const Big& right){
     for(int leftIndex = lSize - 1; leftIndex >= 0; --leftIndex){
         for(int rightIndex = rSize -1; rightIndex >= 0; --rightIndex){
             if(productsIndex >= productsSize){
-                for(productsIndex = productsSize - 1; productsIndex >0; --productsIndex){
-                    products[productsIndex-1] = products[productsIndex-1] + products[productsIndex];
+                for(int i = 1; i < productsSize; ++i){
+                    products[0] = products[0] + products[i];
                 }
+                productsIndex = 1;
             }
             Big leftVal = left.getDigit(leftIndex);
             int leftPower = lSize - 1 - leftIndex;
@@ -274,15 +277,17 @@ Big operator*(const Big& left, const Big& right){
             ++productsIndex;
         }
     }
-    for(int i = 0; i < productsIndex; ++i){
-        std::cout << products[i];
+    for(int i = 1; i < productsIndex; ++i){
+        products[0] = products[0] + products[i];
+        std::cout << products[0];
         if(i >= productsIndex -1){
             std::cout << std::endl;
         } else {
             std::cout << ',' << std::flush;
         }
     }
-    return Big(products[0]);
+    std::cout << std::endl;
+    return products[0];
 }
 
 

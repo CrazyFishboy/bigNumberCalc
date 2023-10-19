@@ -17,9 +17,11 @@
 
 int main() {
 
-    std::string num = "27";
-    Big test(num);
-    Big test2("50098");
+    int num1 = 45;
+    int num2 = 5402;
+
+    Big test(num1);
+    Big test2(num2);
     std::cout << test << std::endl;
     std::cout << test2 << std::endl;
 
@@ -43,8 +45,10 @@ int main() {
     }
 
     
-    test = test + test2;
+    test = test * test2;
     std::cout << test << std::endl;
+    std::cout << "Expected: " << num1*num2 << std::endl;
+
 
 
 

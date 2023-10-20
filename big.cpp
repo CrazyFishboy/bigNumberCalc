@@ -76,7 +76,8 @@ Big::Big(const Big& right) {
 
         // Set this-> size to that of the right object and dynamically allocate a new array
         size = rightSize;
-        digits = new int[size];
+        capacity = right.getCapacity();
+        digits = new int[capacity];
 
         // Copy each element of the right object to this object
         for(int i = 0; i < size; ++i){
@@ -84,7 +85,8 @@ Big::Big(const Big& right) {
         }
     } else { // Sets the value of this object to 0
         size = 1;
-        digits = new int [size] {0};
+        capacity = right.getCapacity();
+        digits = new int [capacity] {0};
     }
 }
 

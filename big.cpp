@@ -61,10 +61,12 @@ Big::Big(std::string val){
             }
         } else {
             size = 1;
+            negative = false;
             digits = new int [capacity] {0};
         }
     } else { // Sets value to 0 if val is empty
         size = 1;
+        negative = false;
         digits = new int [capacity] {0};
     }
 }
@@ -77,6 +79,10 @@ Big::Big(const Big& right) {
         // Set this-> size to that of the right object and dynamically allocate a new array
         size = rightSize;
         capacity = right.getCapacity();
+        if(capacity < 20){
+            capacity = 20;
+        }
+        negative = right.isNegative();
         digits = new int[capacity];
 
         // Copy each element of the right object to this object
@@ -85,7 +91,8 @@ Big::Big(const Big& right) {
         }
     } else { // Sets the value of this object to 0
         size = 1;
-        capacity = right.getCapacity();
+        capacity = 20;
+        negative = false;
         digits = new int [capacity] {0};
     }
 }
@@ -108,6 +115,9 @@ Big::~Big(){
 std::string Big::getValue() const {
     if(size > 0 && digits != nullptr){ // makes sure digits is storing something
         std::string value = "";
+        if(negative){
+            value = "-";
+        }
         // Adds each value to the string to be returned
         for(int i = 0; i < size; ++i){
             value += digits[size];
@@ -142,6 +152,9 @@ int Big::getDigit(int index) const {
  */
 std::ostream& operator<<(std::ostream& out, const Big& object){
     // Adds each value in digits to the ostream
+    if(object.isNegative()){
+        out << "-";
+    }
     for(int i = 0; i < object.size; ++i){
         out << object.digits[i];
     }
@@ -186,9 +199,14 @@ void Big::operator=(const Big& right){
 
             // Set this-> size to that of the right object and dynamically allocate a new array
             size = rightSize;
-            digits = new int[size];
+            capacity = right.getCapacity();
+            if(capacity < 20) {
+                capacity = 20;
+            }
+            digits = new int[capacity] {0};
         }
 
+        negative = right.isNegative();
         // Copy each element of the right object to this object
         for(int i = 0; i < size; ++i){
             digits[i] = right.getDigit(i);
@@ -198,7 +216,9 @@ void Big::operator=(const Big& right){
             delete [] digits;
         }
         size = 1;
-        digits = new int [size] {0};
+        capacity = 20;
+        negative = false;
+        digits = new int [capacity] {0};
     }
 }
 
@@ -365,6 +385,8 @@ Big Big::operator++(int){
 bool Big::operator==(const Big& object) const{
     if(this->size != object.getSize()){ // If the two objects are different sizes, there is no way for them to be the same value
         return false;
+    } else if(this->negative != object.isNegative()){
+        return false;
     } else {
         // Checks each value in each array, as to whether they are the same
         for(int i = 0; i < this->size; ++i){
@@ -387,6 +409,8 @@ bool Big::operator==(const Big& object) const{
  */
 bool Big::operator!=(const Big& object) const{
     if(this->size != object.getSize()){ // If they are not the same size, they can not possibly be qual
+        return true;
+    } else if(this->negative != object.isNegative()){
         return true;
     } else {
         for(int i = 0; i < this->size; ++i){
@@ -411,13 +435,25 @@ bool Big::operator>(const Big& object) const {
         return true;
     } else if(size < object.getSize()){ // Likewise, if it is smaller in size, it must be lesser in value
         return false;
+    } else if(!negative && object.isNegative()){ // Likewise, if it is smaller in size, it must be lesser in value
+        return true;
+    } else if(negative && !object.isNegative()){ // Likewise, if it is smaller in size, it must be lesser in value
+        return false;
     } else {
         // For loop ends early if the two digits are not the same
         for(int i = 0; i < size; ++i){
             if(digits[i] > object.getDigit(i)){
-                return true;
+                if(negative){
+                    return false;
+                } else {
+                    return true;
+                }
             } else if(digits[i] < object.getDigit(i)){
-                return false;
+                if(negative){
+                    return true;
+                } else {
+                    return false;
+                }
             }
         }
         // If the loop does not end early, the objects must be the same, meaning
@@ -439,12 +475,24 @@ bool Big::operator>=(const Big& object) const {
         return true;
     } else if(size < object.getSize()){
         return false;
+    } else if(!negative && object.isNegative()){ // Likewise, if it is smaller in size, it must be lesser in value
+        return true;
+    } else if(negative && !object.isNegative()){ // Likewise, if it is smaller in size, it must be lesser in value
+        return false;
     } else {
         for(int i = 0; i < size; ++i){
             if(digits[i] > object.getDigit(i)){
-                return true;
+                if(negative){
+                    return false;
+                } else {
+                    return true;
+                }
             } else if(digits[i] < object.getDigit(i)){
-                return false;
+                if(negative){
+                    return true;
+                } else {
+                    return false;
+                }
             }
         }
         return true;
@@ -459,12 +507,24 @@ bool Big::operator<(const Big& object) const {
         return false;
     } else if(size < object.getSize()){
         return true;
+    } else if(!negative && object.isNegative()){ // Likewise, if it is smaller in size, it must be lesser in value
+        return false;
+    } else if(negative && !object.isNegative()){ // Likewise, if it is smaller in size, it must be lesser in value
+        return true;
     } else {
         for(int i = 0; i < size; ++i){
             if(digits[i] > object.getDigit(i)){
-                return false;
+                if(negative){
+                    return true;
+                } else {
+                    return false;
+                }
             } else if(digits[i] < object.getDigit(i)){
-                return true;
+                if(negative){
+                    return false;
+                } else {
+                    return true;
+                }
             }
         }
         return false;
@@ -478,12 +538,24 @@ bool Big::operator<=(const Big& object) const {
         return false;
     } else if(size < object.getSize()){
         return true;
+    } else if(!negative && object.isNegative()){ // Likewise, if it is smaller in size, it must be lesser in value
+        return false;
+    } else if(negative && !object.isNegative()){ // Likewise, if it is smaller in size, it must be lesser in value
+        return true;
     } else {
         for(int i = 0; i < size; ++i){
             if(digits[i] > object.getDigit(i)){
-                return false;
+                if(negative){
+                    return true;
+                } else {
+                    return false;
+                }
             } else if(digits[i] < object.getDigit(i)){
-                return true;
+                if(negative){
+                    return false;
+                } else {
+                    return true;
+                }
             }
         }
         return true;

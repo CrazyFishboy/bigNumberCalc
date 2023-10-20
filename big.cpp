@@ -291,34 +291,46 @@ Big operator*(const Big& left, const Big& right){
                 }
                 productsIndex = 1;
             }
-            Big leftVal = left.getDigit(leftIndex);
+            //Big leftVal = left.getDigit(leftIndex);
             int leftPower = lSize - 1 - leftIndex;
-            leftVal.appendDigit(leftPower);
+            //leftVal.appendDigit(leftPower);
 
-            Big rightVal = right.getDigit(rightIndex);
+            //Big rightVal = right.getDigit(rightIndex);
             int rightPower = rSize - 1 - rightIndex;
-            rightVal.appendDigit(rightPower);
+            //rightVal.appendDigit(rightPower);
 
             int product = left.getDigit(leftIndex) * right.getDigit(rightIndex);
             Big tempProduct(product);
             tempProduct.appendDigit(leftPower + rightPower);
             products[productsIndex] = tempProduct;
             
-            std::cout << left.getDigit(leftIndex) << " ( " << leftVal << " ) * " << right.getDigit(rightIndex) << " ( " 
-            << rightVal << " ) = " << products[productsIndex] << std::endl;
+            //std::cout << left.getDigit(leftIndex) << " ( " << leftVal << " ) * " << right.getDigit(rightIndex) << " ( " 
+            //<< rightVal << " ) = " << products[productsIndex] << std::endl;
             ++productsIndex;
         }
     }
     for(int i = 1; i < productsIndex; ++i){
         products[0] = products[0] + products[i];
+        /*
         std::cout << products[0];
         if(i >= productsIndex -1){
             std::cout << std::endl;
         } else {
             std::cout << ',' << std::flush;
         }
+        */
     }
-    std::cout << std::endl;
+    //std::cout << std::endl;
+
+    if((left.isNegative() && !right.isNegative()) || (!left.isNegative() && right.isNegative())){
+        if(!products[0].isNegative()){
+            products[0].flipSign();
+        }
+    } else {
+        if(products[0].isNegative()){
+            products[0].flipSign();
+        }
+    }
     return products[0];
 }
 

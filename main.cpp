@@ -17,8 +17,8 @@
 
 int main() {
 
-    int num1 = -45;
-    int num2 = -440;
+    int num1 = 45;
+    int num2 = 440;
 
     Big test(num1);
     Big test2(num2);
@@ -45,9 +45,9 @@ int main() {
     }
 
     
-    //test = test * test2;
-    //std::cout << test << std::endl;
-    //std::cout << "Expected: " << num1*num2 << std::endl;
+    test = test * test2;
+    std::cout << test << std::endl;
+    std::cout << "Expected: " << num1*num2 << std::endl;
 
 
 

@@ -431,14 +431,22 @@ bool Big::operator!=(const Big& object) const{
  * @return false, this object is equal to or less than the other
  */
 bool Big::operator>(const Big& object) const {
-    if(size > object.getSize()){ // If this object is greater in size, it must be greater in value
-        return true;
-    } else if(size < object.getSize()){ // Likewise, if it is smaller in size, it must be lesser in value
-        return false;
-    } else if(!negative && object.isNegative()){ // Likewise, if it is smaller in size, it must be lesser in value
+    if(!negative && object.isNegative()){ // Likewise, if it is smaller in size, it must be lesser in value
         return true;
     } else if(negative && !object.isNegative()){ // Likewise, if it is smaller in size, it must be lesser in value
         return false;
+    } else if(size > object.getSize()){ // If this object is greater in size, it must be greater in value
+        if(negative){
+            return false;
+        } else {
+            return true;
+        }
+    } else if(size < object.getSize()){ // Likewise, if it is smaller in size, it must be lesser in value
+        if(negative){
+            return true;
+        } else {
+            return false;
+        }
     } else {
         // For loop ends early if the two digits are not the same
         for(int i = 0; i < size; ++i){
@@ -471,14 +479,22 @@ bool Big::operator>(const Big& object) const {
  * @return false, this object is less than the provided object
  */
 bool Big::operator>=(const Big& object) const {
-    if(size > object.getSize()) {
-        return true;
-    } else if(size < object.getSize()){
-        return false;
-    } else if(!negative && object.isNegative()){ // Likewise, if it is smaller in size, it must be lesser in value
+    if(!negative && object.isNegative()){ // Likewise, if it is smaller in size, it must be lesser in value
         return true;
     } else if(negative && !object.isNegative()){ // Likewise, if it is smaller in size, it must be lesser in value
         return false;
+    } else if(size > object.getSize()){ // If this object is greater in size, it must be greater in value
+        if(negative){
+            return false;
+        } else {
+            return true;
+        }
+    } else if(size < object.getSize()){ // Likewise, if it is smaller in size, it must be lesser in value
+        if(negative){
+            return true;
+        } else {
+            return false;
+        }
     } else {
         for(int i = 0; i < size; ++i){
             if(digits[i] > object.getDigit(i)){
@@ -503,14 +519,22 @@ bool Big::operator>=(const Big& object) const {
 
 
 bool Big::operator<(const Big& object) const {
-    if(size > object.getSize()) {
-        return false;
-    } else if(size < object.getSize()){
-        return true;
-    } else if(!negative && object.isNegative()){ // Likewise, if it is smaller in size, it must be lesser in value
+    if(!negative && object.isNegative()){ // Likewise, if it is smaller in size, it must be lesser in value
         return false;
     } else if(negative && !object.isNegative()){ // Likewise, if it is smaller in size, it must be lesser in value
         return true;
+    } else if(size > object.getSize()){ // If this object is greater in size, it must be greater in value
+        if(negative){
+            return true;
+        } else {
+            return false;
+        }
+    } else if(size < object.getSize()){ // Likewise, if it is smaller in size, it must be lesser in value
+        if(negative){
+            return false;
+        } else {
+            return true;
+        }
     } else {
         for(int i = 0; i < size; ++i){
             if(digits[i] > object.getDigit(i)){
@@ -534,14 +558,22 @@ bool Big::operator<(const Big& object) const {
 
 
 bool Big::operator<=(const Big& object) const {
-    if(size > object.getSize()) {
-        return false;
-    } else if(size < object.getSize()){
-        return true;
-    } else if(!negative && object.isNegative()){ // Likewise, if it is smaller in size, it must be lesser in value
+    if(!negative && object.isNegative()){ // Likewise, if it is smaller in size, it must be lesser in value
         return false;
     } else if(negative && !object.isNegative()){ // Likewise, if it is smaller in size, it must be lesser in value
         return true;
+    } else if(size > object.getSize()){ // If this object is greater in size, it must be greater in value
+        if(negative){
+            return true;
+        } else {
+            return false;
+        }
+    } else if(size < object.getSize()){ // Likewise, if it is smaller in size, it must be lesser in value
+        if(negative){
+            return false;
+        } else {
+            return true;
+        }
     } else {
         for(int i = 0; i < size; ++i){
             if(digits[i] > object.getDigit(i)){

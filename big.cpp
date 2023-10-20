@@ -20,17 +20,24 @@
 Big::Big(std::string val){
     // Initialization
     size = 0;
+    capacity = 20;
     digits = nullptr;
+    negative = false;
     if(val.size() > 0){ // Makes sure that val is non-empty
         // Loops through each character in val, making sure that they are all digits
         bool nonZeroFound = false;
         int startIndex = 0;
         for(unsigned i = 0; i < val.size(); ++i){
             if(!std::isdigit(val[i])){ // Sets the value to 0 and returns if a character is not a digit
-                std::cout << val[i] << " is not a digit, setting value to 0" << std::endl;
-                size = 1;
-                digits = new int [1] {0};
-                return;
+                if(val[i] == '-' && !negative){
+                    negative = true;
+                } else {
+                    std::cout << val[i] << " is not a digit, setting value to 0" << std::endl;
+                    size = 1;
+                    negative = false;
+                    digits = new int [capacity] {0};
+                    return;
+                }
             } else {
                 if(!nonZeroFound){
                     if(val[i] != '0'){
@@ -45,17 +52,20 @@ Big::Big(std::string val){
         // then copy the digits to the array
         if(nonZeroFound){
             size = val.size() - startIndex;
-            digits = new int [size];
+            if(size > capacity){
+                capacity = size;
+            }
+            digits = new int [capacity];
             for(unsigned i = startIndex, digitIndex = 0; i < val.size(); ++i, ++digitIndex){
                 digits[digitIndex] = val[i] - '0';
             }
         } else {
             size = 1;
-            digits = new int [1] {0};
+            digits = new int [capacity] {0};
         }
     } else { // Sets value to 0 if val is empty
         size = 1;
-        digits = new int [1] {0};
+        digits = new int [capacity] {0};
     }
 }
 

@@ -17,13 +17,13 @@
 
 int main() {
 
-    int num1 = 45;
-    int num2 = 5402;
+    int num1 = -45;
+    int num2 = -440;
 
     Big test(num1);
     Big test2(num2);
-    std::cout << test << std::endl;
-    std::cout << test2 << std::endl;
+    std::cout << test << " " << test.getSize() << " " << test.getCapacity() << test.isNegative() << std::endl;
+    std::cout << test2 << " " << test2.getSize() << " " << test2.getCapacity() << test2.isNegative() << std::endl;
 
     if(test == test2){
         std::cout << "They are equal" << std::endl;
@@ -45,9 +45,9 @@ int main() {
     }
 
     
-    test = test * test2;
-    std::cout << test << std::endl;
-    std::cout << "Expected: " << num1*num2 << std::endl;
+    //test = test * test2;
+    //std::cout << test << std::endl;
+    //std::cout << "Expected: " << num1*num2 << std::endl;
 
 
 

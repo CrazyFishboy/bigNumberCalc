@@ -274,6 +274,13 @@ Big operator+(const Big& left, const Big& right){
 }
 
 
+/**
+ * @brief Returns an object that is the prduct of the two arguments
+ * 
+ * @param left, the left term in the operation
+ * @param right, the right term in the operation
+ * @return Big, a big object, whose value is the product of left and right
+ */
 Big operator*(const Big& left, const Big& right){
     int lSize = left.getSize();
     int rSize = right.getSize();
@@ -283,25 +290,25 @@ Big operator*(const Big& left, const Big& right){
     const int productsSize = 20; // Number of elements in the products array
     Big * products = new Big [productsSize];
     int productsIndex = 0; // Current index in products array
-    for(int leftIndex = lSize - 1; leftIndex >= 0; --leftIndex){
-        for(int rightIndex = rSize -1; rightIndex >= 0; --rightIndex){
-            if(productsIndex >= productsSize){
+    for(int leftIndex = lSize - 1; leftIndex >= 0; --leftIndex){ // Loops through each digit of the left
+        for(int rightIndex = rSize -1; rightIndex >= 0; --rightIndex){ // Loops through each digit of the right
+            if(productsIndex >= productsSize){ // If the array of products is full, condense it
                 for(int i = 1; i < productsSize; ++i){
                     products[0] = products[0] + products[i];
                 }
                 productsIndex = 1;
             }
             //Big leftVal = left.getDigit(leftIndex);
-            int leftPower = lSize - 1 - leftIndex;
+            int leftPower = lSize - 1 - leftIndex; // The power of the digit of the left object
             //leftVal.appendDigit(leftPower);
 
             //Big rightVal = right.getDigit(rightIndex);
-            int rightPower = rSize - 1 - rightIndex;
+            int rightPower = rSize - 1 - rightIndex; // The power of the digit of the right object
             //rightVal.appendDigit(rightPower);
 
             int product = left.getDigit(leftIndex) * right.getDigit(rightIndex);
             Big tempProduct(product);
-            tempProduct.appendDigit(leftPower + rightPower);
+            tempProduct.appendDigit(leftPower + rightPower); // Adds a number of 0's to the end of the number equal to the sum of the powers
             products[productsIndex] = tempProduct;
             
             //std::cout << left.getDigit(leftIndex) << " ( " << leftVal << " ) * " << right.getDigit(rightIndex) << " ( " 
@@ -529,7 +536,13 @@ bool Big::operator>=(const Big& object) const {
 
 
 
-
+/**
+ * @brief Checks whether this object is less than the provided object
+ * 
+ * @param object, the object comparing with
+ * @return true, this object is less than the provided one
+ * @return false, this object is greater than the provided object
+ */
 bool Big::operator<(const Big& object) const {
     if(!negative && object.isNegative()){ // Likewise, if it is smaller in size, it must be lesser in value
         return false;
@@ -569,6 +582,13 @@ bool Big::operator<(const Big& object) const {
 
 
 
+/**
+ * @brief Checks whether this object is less than or equal to the provided object
+ * 
+ * @param object, the object comparing with
+ * @return true, this object is less than or equal to the provided one
+ * @return false, this object is greater than the provided object
+ */
 bool Big::operator<=(const Big& object) const {
     if(!negative && object.isNegative()){ // Likewise, if it is smaller in size, it must be lesser in value
         return false;

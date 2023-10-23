@@ -288,19 +288,21 @@ Big operator-(const Big& left, const Big& right){
         valBig.flipSign();
         return valBig;
     }
+
+    // Checks negative signs and changes the equation accordingly
     if(!left.isNegative() && right.isNegative()){
         return left + right;
     } else if(left.isNegative() && !right.isNegative()){
         Big valBig(left + right);
         valBig.flipSign();
         return valBig;
-    }  else if(left.isNegative() && right.isNegative()){
+    } else if(left.isNegative() && right.isNegative()){
         Big rCopy(right);
         rCopy.flipSign();
         Big lCopy(left);
         lCopy.flipSign();
         return rCopy - lCopy;
-    } else {
+    } else { // Actual subtraction operation
         int lSize = left.getSize(); // Stores the size of the left object, so repeated calls do not need to be performed
         int rSize = right.getSize(); // Same thing but with the right object
         if(rSize > 0 && lSize > 0){ // Makes sure that both objects store a value
@@ -310,24 +312,24 @@ Big operator-(const Big& left, const Big& right){
 
             while(indexL >= 0){ // Loops through each object 
                 if(indexR >= 0){ // If there is still a value in the right object
-                    if(val.getDigit(indexL) >= right.getDigit(indexR)){
+                    if(val.getDigit(indexL) >= right.getDigit(indexR)){ // If the current index can subtract the right index
                         val.digits[indexL] -= right.getDigit(indexR);
-                    } else {
+                    } else { // Borrow from next digit
                         int counter = 1;
-                        while(val.getDigit(indexL - counter) == 0){
+                        while(val.getDigit(indexL - counter) == 0){ // Determines how many places over to go
                             if(indexL - counter == 0 && val.getDigit(indexL - counter) == 0){
                                 std::cout << "Subtraction error: " << val << " - " << right << std::endl;
                                 exit(1);
                             }
                             ++counter;
                         }
-                        --val.digits[indexL - counter];
+                        --val.digits[indexL - counter]; // Takes 1 from the digit being borrowed from
                         --counter;
-                        while(counter > 0){
+                        while(counter > 0){ // Sets the digits inbetween to 9
                             val.digits[indexL - counter] = 9;
                             --counter;
                         }
-                        val.digits[indexL] += 10;
+                        val.digits[indexL] += 10; // Adds 10 to the current digit
                         --counter;
 
                         val.digits[indexL] -= right.getDigit(indexR);
@@ -335,7 +337,6 @@ Big operator-(const Big& left, const Big& right){
                 }
                 --indexL;
                 --indexR;
-                
             }
             return val; // Returns the created big object
         } else {

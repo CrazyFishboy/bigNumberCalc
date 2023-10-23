@@ -273,6 +273,64 @@ Big operator+(const Big& left, const Big& right){
     }
 }
 
+/**
+ * @brief Adds the two values provided as arguments and stores them in a third object, which
+ * it returns
+ * 
+ * @param left, the object on the left side of the plus sign 
+ * @param right, the object on the right side of the plus sign
+ *      example: left - right
+ * @return Big, the object being returned. Stores the sum of left and right
+ */
+Big operator-(const Big& left, const Big& right){
+    if(right > left){ // Ensures that the left object is always >= right object, in size
+        Big valBig(right - left);
+        valBig.flipSign();
+        return valBig;
+    }
+    int lSize = left.getSize(); // Stores the size of the left object, so repeated calls do not need to be performed
+    int rSize = right.getSize(); // Same thing but with the right object
+    if(rSize > 0 && lSize > 0){ // Makes sure that both objects store a value
+        std::string value = ""; 
+        int indexL = lSize -1; // left object
+        int indexR = rSize - 1; // Other object
+        Big val = left;
+
+        while(indexL >= 0){ // Loops through each object 
+            if(indexR >= 0){ // If there is still a value in the right object
+                if(val.getDigit(indexL) >= right.getDigit(indexR)){
+                    val.digits[indexL] -= right.getDigit(indexR);
+                } else {
+                    int counter = 1;
+                    while(val.getDigit(indexL - counter) == 0){
+                        if(indexL - counter == 0 && val.getDigit(indexL - counter) == 0){
+                            std::cout << "Subtraction error: " << val << " - " << right << std::endl;
+                            exit(1);
+                        }
+                        ++counter;
+                    }
+                    --val.digits[indexL - counter];
+                    --counter;
+                    while(counter > 0){
+                        val.digits[indexL - counter] = 9;
+                        --counter;
+                    }
+                    val.digits[indexL] += 10;
+                    --counter;
+
+                    val.digits[indexL] -= right.getDigit(indexR);
+                }
+            }
+            --indexL;
+            --indexR;
+            
+        }
+        return val; // Returns the created big object
+    } else {
+        return (Big("0"));
+    }
+}
+
 
 /**
  * @brief Returns an object that is the prduct of the two arguments

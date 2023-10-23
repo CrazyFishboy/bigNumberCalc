@@ -288,46 +288,55 @@ Big operator-(const Big& left, const Big& right){
         valBig.flipSign();
         return valBig;
     }
-    int lSize = left.getSize(); // Stores the size of the left object, so repeated calls do not need to be performed
-    int rSize = right.getSize(); // Same thing but with the right object
-    if(rSize > 0 && lSize > 0){ // Makes sure that both objects store a value
-        std::string value = ""; 
-        int indexL = lSize -1; // left object
-        int indexR = rSize - 1; // Other object
-        Big val = left;
-
-        while(indexL >= 0){ // Loops through each object 
-            if(indexR >= 0){ // If there is still a value in the right object
-                if(val.getDigit(indexL) >= right.getDigit(indexR)){
-                    val.digits[indexL] -= right.getDigit(indexR);
-                } else {
-                    int counter = 1;
-                    while(val.getDigit(indexL - counter) == 0){
-                        if(indexL - counter == 0 && val.getDigit(indexL - counter) == 0){
-                            std::cout << "Subtraction error: " << val << " - " << right << std::endl;
-                            exit(1);
-                        }
-                        ++counter;
-                    }
-                    --val.digits[indexL - counter];
-                    --counter;
-                    while(counter > 0){
-                        val.digits[indexL - counter] = 9;
-                        --counter;
-                    }
-                    val.digits[indexL] += 10;
-                    --counter;
-
-                    val.digits[indexL] -= right.getDigit(indexR);
-                }
-            }
-            --indexL;
-            --indexR;
-            
-        }
-        return val; // Returns the created big object
+    if(!left.isNegative() && right.isNegative()){
+        return left + right;
+    } else if(left.isNegative() && !right.isNegative()){
+        Big valBig(left + right);
+        valBig.flipSign();
+        return valBig;
+    }  else if(left.isNegative() && right.isNegative()){
+        return right - left;
     } else {
-        return (Big("0"));
+        int lSize = left.getSize(); // Stores the size of the left object, so repeated calls do not need to be performed
+        int rSize = right.getSize(); // Same thing but with the right object
+        if(rSize > 0 && lSize > 0){ // Makes sure that both objects store a value
+            int indexL = lSize -1; // left object
+            int indexR = rSize - 1; // Other object
+            Big val = left; // Object that will be returned
+
+            while(indexL >= 0){ // Loops through each object 
+                if(indexR >= 0){ // If there is still a value in the right object
+                    if(val.getDigit(indexL) >= right.getDigit(indexR)){
+                        val.digits[indexL] -= right.getDigit(indexR);
+                    } else {
+                        int counter = 1;
+                        while(val.getDigit(indexL - counter) == 0){
+                            if(indexL - counter == 0 && val.getDigit(indexL - counter) == 0){
+                                std::cout << "Subtraction error: " << val << " - " << right << std::endl;
+                                exit(1);
+                            }
+                            ++counter;
+                        }
+                        --val.digits[indexL - counter];
+                        --counter;
+                        while(counter > 0){
+                            val.digits[indexL - counter] = 9;
+                            --counter;
+                        }
+                        val.digits[indexL] += 10;
+                        --counter;
+
+                        val.digits[indexL] -= right.getDigit(indexR);
+                    }
+                }
+                --indexL;
+                --indexR;
+                
+            }
+            return val; // Returns the created big object
+        } else {
+            return (Big("0"));
+        }
     }
 }
 

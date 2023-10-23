@@ -295,7 +295,11 @@ Big operator-(const Big& left, const Big& right){
         valBig.flipSign();
         return valBig;
     }  else if(left.isNegative() && right.isNegative()){
-        return right - left;
+        Big rCopy(right);
+        rCopy.flipSign();
+        Big lCopy(left);
+        lCopy.flipSign();
+        return rCopy - lCopy;
     } else {
         int lSize = left.getSize(); // Stores the size of the left object, so repeated calls do not need to be performed
         int rSize = right.getSize(); // Same thing but with the right object

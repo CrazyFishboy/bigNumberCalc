@@ -240,36 +240,50 @@ Big operator+(const Big& left, const Big& right){
     if(rSize > lSize){ // Ensures that the left object is always >= right object, in size
         return right + left;
     }
-    if(rSize > 0 && lSize > 0){ // Makes sure that both objects store a value
-        std::string value = ""; // Stores the sum as a string. Used as the constructor paramenter for the return object
-        int indexL = lSize -1; // left object
-        int indexR = rSize - 1; // Other object
-        int overflow = 0; // When left + right > 9, this is extra above 9
-        int working = 0; // The working sum. Stores the sum of overflow, left, and right, before operations
-
-        while(indexL >= 0 || overflow > 0){ // Loops through each object 
-            if(indexR >= 0){ // If there is still a value in the right object
-                working = left.getDigit(indexL) + right.getDigit(indexR) + overflow; // Get the sum
-                overflow = working / 10; // Find value for next power of 10
-                working %= 10; // Find leftover for this value
-                value = std::to_string(working) + value; // Add value to string
-            } else if(indexL >= 0){ // If there are no more values in right object, but still values in overflow
-                working = left.getDigit(indexL) + overflow; // Sums left and overflow
-                overflow = working / 10;
-                working %= 10;
-                value = std::to_string(working) + value;
-            } else { // If there are only values left in the left object
-                working = overflow;
-                overflow /= 10;
-                working %= 10;
-                value = std::to_string(working) + value;
-            }
-            --indexL;
-            --indexR;
-        }   
-        return Big(value); // Creates a big object with the sum as its value
+    if(!left.isNegative() && right.isNegative()){
+        return left - right;
+    } else if(left.isNegative() && !right.isNegative()){
+        return right - left;
+    } else if(left.isNegative() && right.isNegative()){
+        Big rCopy(right);
+        rCopy.flipSign();
+        Big lCopy(left);
+        lCopy.flipSign();
+        Big val(lCopy + rCopy);
+        val.flipSign();
+        return val;
     } else {
-        return (Big("0"));
+        if(rSize > 0 && lSize > 0){ // Makes sure that both objects store a value
+            std::string value = ""; // Stores the sum as a string. Used as the constructor paramenter for the return object
+            int indexL = lSize -1; // left object
+            int indexR = rSize - 1; // Other object
+            int overflow = 0; // When left + right > 9, this is extra above 9
+            int working = 0; // The working sum. Stores the sum of overflow, left, and right, before operations
+
+            while(indexL >= 0 || overflow > 0){ // Loops through each object 
+                if(indexR >= 0){ // If there is still a value in the right object
+                    working = left.getDigit(indexL) + right.getDigit(indexR) + overflow; // Get the sum
+                    overflow = working / 10; // Find value for next power of 10
+                    working %= 10; // Find leftover for this value
+                    value = std::to_string(working) + value; // Add value to string
+                } else if(indexL >= 0){ // If there are no more values in right object, but still values in overflow
+                    working = left.getDigit(indexL) + overflow; // Sums left and overflow
+                    overflow = working / 10;
+                    working %= 10;
+                    value = std::to_string(working) + value;
+                } else { // If there are only values left in the left object
+                    working = overflow;
+                    overflow /= 10;
+                    working %= 10;
+                    value = std::to_string(working) + value;
+                }
+                --indexL;
+                --indexR;
+            }   
+            return Big(value); // Creates a big object with the sum as its value
+        } else {
+            return (Big("0"));
+        }
     }
 }
 
@@ -283,7 +297,9 @@ Big operator+(const Big& left, const Big& right){
  * @return Big, the object being returned. Stores the sum of left and right
  */
 Big operator-(const Big& left, const Big& right){
-    if(right > left){ // Ensures that the left object is always >= right object, in size
+    int lSize = left.getSize(); // Stores the size of the left object, so repeated calls do not need to be performed
+    int rSize = right.getSize(); // Same thing but with the right object
+    if(rSize > lSize){ // Ensures that the left object is always >= right object, in size
         Big valBig(right - left);
         valBig.flipSign();
         return valBig;
@@ -291,7 +307,9 @@ Big operator-(const Big& left, const Big& right){
 
     // Checks negative signs and changes the equation accordingly
     if(!left.isNegative() && right.isNegative()){
-        return left + right;
+        Big rCopy(right);
+        rCopy.flipSign();
+        return left + rCopy;
     } else if(left.isNegative() && !right.isNegative()){
         Big valBig(left + right);
         valBig.flipSign();
@@ -308,37 +326,39 @@ Big operator-(const Big& left, const Big& right){
         if(rSize > 0 && lSize > 0){ // Makes sure that both objects store a value
             int indexL = lSize -1; // left object
             int indexR = rSize - 1; // Other object
-            Big val = left; // Object that will be returned
+            std::string val = left.getValue(); // Object that will be returned
 
-            while(indexL >= 0){ // Loops through each object 
-                if(indexR >= 0){ // If there is still a value in the right object
-                    if(val.getDigit(indexL) >= right.getDigit(indexR)){ // If the current index can subtract the right index
-                        val.digits[indexL] -= right.getDigit(indexR);
+            while(indexL >= 0 || indexR >= 0){ // Loops through each object
+                if(indexL < 0){
+                   val = std::to_string(right.getDigit(indexR)) + val;
+                } else if(indexR >= 0){ // If there is still a value in the right object
+                    if(val[indexL] >= right.getDigit(indexR)){ // If the current index can subtract the right index
+                        val[indexL] -= right.getDigit(indexR);
                     } else { // Borrow from next digit
                         int counter = 1;
-                        while(val.getDigit(indexL - counter) == 0){ // Determines how many places over to go
-                            if(indexL - counter == 0 && val.getDigit(indexL - counter) == 0){
+                        while(val[indexL - counter] == 0){ // Determines how many places over to go
+                            if(indexL - counter == 0 && val[indexL - counter] == 0){
                                 std::cout << "Subtraction error: " << val << " - " << right << std::endl;
                                 exit(1);
                             }
                             ++counter;
                         }
-                        --val.digits[indexL - counter]; // Takes 1 from the digit being borrowed from
+                        --val[indexL - counter]; // Takes 1 from the digit being borrowed from
                         --counter;
                         while(counter > 0){ // Sets the digits inbetween to 9
-                            val.digits[indexL - counter] = 9;
+                            val[indexL - counter] = 9;
                             --counter;
                         }
-                        val.digits[indexL] += 10; // Adds 10 to the current digit
+                        val[indexL] += 10; // Adds 10 to the current digit
                         --counter;
 
-                        val.digits[indexL] -= right.getDigit(indexR);
+                        val[indexL] -= right.getDigit(indexR);
                     }
                 }
                 --indexL;
                 --indexR;
             }
-            return val; // Returns the created big object
+            return Big(val); // Returns the created big object
         } else {
             return (Big("0"));
         }

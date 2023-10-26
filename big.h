@@ -22,6 +22,8 @@ class Big {
 
 public:
 
+    static int capacityIncrement;
+
     // Constructors and Destructors
     Big() : Big("0") {}
     Big(long long val) : Big(std::to_string(val)) {}

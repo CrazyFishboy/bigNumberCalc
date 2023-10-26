@@ -11,6 +11,8 @@
 
 #include "big.h"
 
+int Big::capacityIncrement = 20;
+
 
 /**
  * @brief Convert constructor for big object. Takes a string representing an integer as an argument
@@ -20,7 +22,7 @@
 Big::Big(std::string val){
     // Initialization
     size = 0;
-    capacity = 20;
+    capacity = capacityIncrement;
     digits = nullptr;
     negative = false;
     if(val.size() > 0){ // Makes sure that val is non-empty
@@ -79,8 +81,8 @@ Big::Big(const Big& right) {
         // Set this-> size to that of the right object and dynamically allocate a new array
         size = rightSize;
         capacity = right.getCapacity();
-        if(capacity < 20){
-            capacity = 20;
+        if(capacity < capacityIncrement){
+            capacity = capacityIncrement;
         }
         negative = right.isNegative();
         digits = new int[capacity];
@@ -91,7 +93,7 @@ Big::Big(const Big& right) {
         }
     } else { // Sets the value of this object to 0
         size = 1;
-        capacity = 20;
+        capacity = capacityIncrement;
         negative = false;
         digits = new int [capacity] {0};
     }
@@ -200,8 +202,8 @@ void Big::operator=(const Big& right){
             // Set this-> size to that of the right object and dynamically allocate a new array
             size = rightSize;
             capacity = right.getCapacity();
-            if(capacity < 20) {
-                capacity = 20;
+            if(capacity < capacityIncrement) {
+                capacity = capacityIncrement;
             }
             digits = new int[capacity] {0};
         }
@@ -216,7 +218,7 @@ void Big::operator=(const Big& right){
             delete [] digits;
         }
         size = 1;
-        capacity = 20;
+        capacity = capacityIncrement;
         negative = false;
         digits = new int [capacity] {0};
     }

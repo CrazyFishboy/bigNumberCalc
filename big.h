@@ -49,6 +49,8 @@ public:
     friend Big operator*(const Big& left, const Big& right);
     Big& operator++();
     Big operator++(int);
+    Big& operator--();
+    Big operator--(int);
 
     // Comparison operators
     bool operator==(const Big& object) const;

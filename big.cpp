@@ -487,6 +487,16 @@ Big Big::operator++(int){
 }
 
 
+Big& Big::operator--(){
+
+}
+Big Big::operator--(int){
+    Big temp(*this);
+    --*this;
+    return temp;
+}
+
+
 
 /**
  * @brief Allows comparison between two big objects, as to whether they store equal values

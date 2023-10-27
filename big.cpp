@@ -481,6 +481,12 @@ Big Big::operator++(int){
 
 
 Big& Big::operator--(){
+    if(negative == true){
+        negative = false;
+        ++*this;
+        negative = true;
+        return *this;
+    }
     if(size > 0){ // Makes sure that this object stores a value
         int index = size -1;
         if(size == 1 && negative == false && digits[0] == 0){

@@ -514,6 +514,17 @@ Big& Big::operator--(){
 
             --digits[index];
         }
+
+        int counter = 0;
+        index = 0;
+        while(digits[index] == 0 && index < (size - 2)){
+            ++counter;
+            ++index;
+        }
+        size -= counter;
+        for(int i = 0; i < size; ++i, ++index){
+            digits[i] = digits[index];
+        }
     } else {
         std::cout << "Object has no value" << std::endl;
         exit(1);

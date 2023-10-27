@@ -443,6 +443,12 @@ Big operator*(const Big& left, const Big& right){
  * @return Big, a reference to this object
  */
 Big& Big::operator++(){
+    if(negative == true){
+        negative = false;
+        --*this;
+        negative = true;
+        return *this;
+    }
     int index = size;
     do {
         --index;

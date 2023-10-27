@@ -15,15 +15,15 @@ Currently supports addition, subtraction, and multiplication of these numbers. A
 Current steps to run:
 
   clone the repository:
-    *`git clone bigNumberCalc`
+    `git clone bigNumberCalc`
 
   Navigate to the repository folder:
-    *`cd bigNumberCalc`
+    `cd bigNumberCalc`
 
   Compile and link main.cpp and big.cpp:
-    *`g++ -Wall main.cpp big.cpp`
+    `g++ -Wall main.cpp big.cpp`
 
-    Note that main.cpp is a test/demo file, replace with your own file
+  * Note that main.cpp is a test/demo file, replace with your own file
 
   Run:
     `./a.out`

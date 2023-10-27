@@ -475,20 +475,7 @@ Big& Big::operator++(){
  */
 Big Big::operator++(int){
     Big temp = *this;
-    int index = size;
-    do {
-        --index;
-        if(index < 0){
-            addDigit();
-            digits[0] = 0;
-            index = 0;
-        }
-        digits[index]++;
-        //std::cout << digits[index] << std::endl;
-    } while(digits[index] % 10 == 0 && digits[index] != 0);
-    for(int i = 0; i < size; ++i){
-        digits[i] %= 10;
-    }
+    ++*this;
     return temp;
 }
 

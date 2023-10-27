@@ -122,7 +122,7 @@ std::string Big::getValue() const {
         }
         // Adds each value to the string to be returned
         for(int i = 0; i < size; ++i){
-            value += digits[size];
+            value += std::to_string(digits[i]);
         }
         return value;
     } else { return "0"; }
@@ -323,11 +323,10 @@ Big operator-(const Big& left, const Big& right){
         lCopy.flipSign();
         return rCopy - lCopy;
     } else { // Actual subtraction operation
-        int lSize = left.getSize(); // Stores the size of the left object, so repeated calls do not need to be performed
-        int rSize = right.getSize(); // Same thing but with the right object
         if(rSize > 0 && lSize > 0){ // Makes sure that both objects store a value
             int indexL = lSize -1; // left object
             int indexR = rSize - 1; // Other object
+            std::cout << left.getValue() << std::endl;
             std::string val = left.getValue(); // Object that will be returned
 
             while(indexL >= 0 || indexR >= 0){ // Loops through each object
@@ -360,7 +359,21 @@ Big operator-(const Big& left, const Big& right){
                 --indexL;
                 --indexR;
             }
-            return Big(val); // Returns the created big object
+            /*
+            Big returnVal(val);
+            int counter = 0;
+            int index = 0;
+            while(returnVal.digits[index] == 0 && index < (returnVal.size - 2)){
+                ++counter;
+                ++index;
+            }
+            returnVal.size -= counter;
+            for(int i = 0; i < returnVal.size; ++i, ++index){
+                returnVal.digits[i] = returnVal.digits[index];
+            }
+            return returnVal; // Returns the created big object
+            */
+           return Big(val);
         } else {
             return (Big("0"));
         }

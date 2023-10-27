@@ -488,8 +488,39 @@ Big Big::operator++(int){
 
 
 Big& Big::operator--(){
+    if(size > 0){ // Makes sure that this object stores a value
+        int index = size -1;
+        if(size == 1 && negative == false && digits[0] == 0){
+            negative = true;
+            digits[0] = 1;
+        } else if(digits[index] > 0){
+            --digits[index];
+        } else {
+            int counter = 1;
+            while(digits[index - counter] == 0){ // Determines how many places over to go
+                if(index - counter == 0 && digits[index - counter] == 0){
+                    std::cout << "Subtraction error: " << *this << "-- " << std::endl;
+                    exit(1);
+                }
+                ++counter;
+            }
+            --digits[index - counter]; // Takes 1 from the digit being borrowed from
+            --counter;
+            while(counter > 0){ // Sets the digits inbetween to 9
+                digits[index - counter] = 9;
+                --counter;
+            }
+            digits[index] += 10; // Adds 10 to the current digit
+            --counter;
 
+            --digits[index];
+        }
+    } else {
+        std::cout << "Object has no value" << std::endl;
+        exit(1);
+    }
 }
+
 Big Big::operator--(int){
     Big temp(*this);
     --*this;

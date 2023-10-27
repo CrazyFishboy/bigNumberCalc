@@ -326,12 +326,12 @@ Big operator-(const Big& left, const Big& right){
         if(rSize > 0 && lSize > 0){ // Makes sure that both objects store a value
             int indexL = lSize -1; // left object
             int indexR = rSize - 1; // Other object
-            std::cout << left.getValue() << std::endl;
-            std::string val = left.getValue(); // Object that will be returned
+            Big val(left); // Object that will be returned
 
             while(indexL >= 0 || indexR >= 0){ // Loops through each object
                 if(indexL < 0){
-                   val = std::to_string(right.getDigit(indexR)) + val;
+                    val.addDigit();
+                    val[0] = right.getDigit(indexR);
                 } else if(indexR >= 0){ // If there is still a value in the right object
                     if(val[indexL] >= right.getDigit(indexR)){ // If the current index can subtract the right index
                         val[indexL] -= right.getDigit(indexR);
@@ -359,21 +359,17 @@ Big operator-(const Big& left, const Big& right){
                 --indexL;
                 --indexR;
             }
-            /*
-            Big returnVal(val);
             int counter = 0;
             int index = 0;
-            while(returnVal.digits[index] == 0 && index < (returnVal.size - 2)){
+            while(val.digits[index] == 0 && index < (val.size - 1)){
                 ++counter;
                 ++index;
             }
-            returnVal.size -= counter;
-            for(int i = 0; i < returnVal.size; ++i, ++index){
-                returnVal.digits[i] = returnVal.digits[index];
+            val.size -= counter;
+            for(int i = 0; i < val.size; ++i, ++index){
+                val.digits[i] = val.digits[index];
             }
-            return returnVal; // Returns the created big object
-            */
-           return Big(val);
+            return val;
         } else {
             return (Big("0"));
         }

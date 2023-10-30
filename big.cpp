@@ -308,15 +308,15 @@ Big operator-(const Big& left, const Big& right){
     }
 
     // Checks negative signs and changes the equation accordingly
-    if(!left.isNegative() && right.isNegative()){
+    if(!left.isNegative() && right.isNegative()){ // positive - negative
         Big rCopy(right);
         rCopy.flipSign();
         return left + rCopy;
-    } else if(left.isNegative() && !right.isNegative()){
+    } else if(left.isNegative() && !right.isNegative()){ // negative - positive
         Big valBig(left + right);
         valBig.flipSign();
         return valBig;
-    } else if(left.isNegative() && right.isNegative()){
+    } else if(left.isNegative() && right.isNegative()){ // negative - negative
         Big rCopy(right);
         rCopy.flipSign();
         Big lCopy(left);
@@ -359,14 +359,16 @@ Big operator-(const Big& left, const Big& right){
                 --indexL;
                 --indexR;
             }
+
+            // Removes leading zeros from the number in the case where the difference has less digits the larger term
             int counter = 0;
             int index = 0;
-            while(val.digits[index] == 0 && index < (val.size - 1)){
+            while(val.digits[index] == 0 && index < (val.size - 1)){ // Finds how many leading zeros there are
                 ++counter;
                 ++index;
             }
-            val.size -= counter;
-            for(int i = 0; i < val.size; ++i, ++index){
+            val.size -= counter; // Updates size to not include the non-leading zeros
+            for(int i = 0; i < val.size; ++i, ++index){ // Moves the non-zeros to the beginning of the array
                 val.digits[i] = val.digits[index];
             }
             return val;

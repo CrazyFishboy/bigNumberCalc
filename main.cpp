@@ -17,11 +17,11 @@
 
 int main() {
 
-    int num1 = 2;
-    int num2 = 14;
+    long long num1 = 100000000000;
+    int num2 = 9;
 
-    Big test(num1);
-    Big test2(num2);
+    Big test("1000000000000000000000000000000");
+    Big test2("9");
     std::cout << test << " Size: " << test.getSize() << " Capacity: " << test.getCapacity() << " Negative?: " << test.isNegative() << std::endl;
     std::cout << test2 << " Size: " << test2.getSize() << " Capacity: " << test2.getCapacity() << " Negative?: " << test2.isNegative() << std::endl;
 
@@ -45,9 +45,17 @@ int main() {
     }
 
     
-    test = test - test2;
-    std::cout << "Calculated: " << test << std::endl;
-    std::cout << "Expected: " << num1-num2 << std::endl;
+    std::cout << test.getValue() << " Size: " << test.getSize() << " Capacity: " << test.getCapacity() << " Negative?: " << test.isNegative() << std::endl;
+
+    test = test / test2; // Should be 30 1's
+
+    std::cout << "Calculated: " << test.getValue() << " Size: " << test.getSize() 
+        << " Capacity: " << test.getCapacity() << " Negative?: " << test.isNegative() << std::endl;
+    
+    // std::cout << "Calculated: " << test << std::endl; 
+    // std::cout << "Expected: " << num1 / num2 << std::endl;
+
+
 
 
 

@@ -49,6 +49,7 @@ public:
     friend Big operator+(const Big& left, const Big& right);
     friend Big operator-(const Big& left, const Big& right);
     friend Big operator*(const Big& left, const Big& right);
+    friend Big operator/(const Big& left, const Big& right);
     Big& operator++();
     Big operator++(int);
     Big& operator--();
@@ -65,9 +66,12 @@ public:
 
     void add(const Big& right); // Does addition just like addition operator
 
+    void displayArray(); // Temporary for debugging
+
 protected:
     void addDigit(int num = 1); // Increases the size of the array by one at the beginning
     void appendDigit(int num = 1); // Increases the size of the array by one at the end
+    void truncate(int num = 1); // Changes size, effectively truncating the number
 
 
 private:

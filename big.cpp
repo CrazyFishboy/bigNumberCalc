@@ -927,3 +927,21 @@ void Big::appendDigit(int num){
     digits = temp; // Updates the pointer, to point to the new array
     size += num;
 }
+
+
+
+void Big::truncate(int num){
+    if(size <= num){
+        size = 0;
+    } else {
+        size -= num;
+    }
+}
+
+
+void Big::displayArray(){
+    for(int i = 0; i < capacity; ++i){
+        std::cout << *(digits+i) << std::flush;
+    }
+    std::cout << std::endl;
+}

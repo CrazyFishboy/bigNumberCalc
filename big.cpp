@@ -447,6 +447,42 @@ Big operator*(const Big& left, const Big& right){
 }
 
 
+Big operator/(const Big& left, const Big& right){
+    if(left.negative || right.negative){
+        Big lCopy = left;
+        Big rCopy = right;
+        if(left.negative){
+            lCopy.flipSign();
+        }
+        if(right.negative){
+            rCopy.flipSign();
+        }
+        Big answer = lCopy / rCopy;
+        if(!(left.negative && right.negative)){
+            answer.flipSign();
+        }
+        return answer;
+    }
+    if(right > left){
+        return 0;
+    } else if (right == left){
+        return 1;
+    } else {
+        Big check = 0;
+        Big counter = 0;
+        // while(check * 10 < left){
+        //     check = check * 10;
+        // }
+        while(check + right <= left){
+            check = check + right;
+            ++counter;
+        }
+        
+        return counter;
+    }
+}
+
+
 /**
  * @brief Overloaded prefix ++ operator. Increases the total value of the digits array
  * by 1, starting from the last element

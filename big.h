@@ -63,7 +63,7 @@ public:
     bool operator<=(const Big& object) const;
 
 
-    void add(const Big& right);
+    void add(const Big& right); // Does addition just like addition operator
 
 protected:
     void addDigit(int num = 1); // Increases the size of the array by one at the beginning

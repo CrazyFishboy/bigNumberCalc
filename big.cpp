@@ -468,16 +468,27 @@ Big operator/(const Big& left, const Big& right){
     } else if (right == left){
         return 1;
     } else {
-        Big check = 0;
+        Big check = right;
+        Big divisor = 0;
         Big counter = 0;
-        // while(check * 10 < left){
-        //     check = check * 10;
-        // }
-        while(check + right <= left){
-            check = check + right;
-            ++counter;
+        Big power = 1;
+        while(check < left){
+            check.appendDigit(); // Multiplies by 10
+            power.appendDigit();
         }
-        
+        check.truncate();
+        power.truncate();
+        while(check >= right){
+            std::cout << "Check: " << check << std::endl;
+            while(divisor + check <= left){
+                
+                divisor = divisor + check;
+                counter = counter + power;
+                std::cout << "Divisor: " << divisor << std::endl;
+            }
+            power.truncate();
+            check.truncate();
+        }
         return counter;
     }
 }

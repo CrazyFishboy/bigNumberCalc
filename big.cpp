@@ -447,6 +447,15 @@ Big operator*(const Big& left, const Big& right){
 }
 
 
+/**
+ * @brief Division operator. Performs division, dividing the left object by the right, and returns an object for the result
+ * Note that division is performed in a similar fashion to integer division, such that, any remainder is discarded.
+ * Ex: 5 / 2 = 2 ... 27 / 8 = 3 ... 27 / 9 = 3
+ * 
+ * @param left, the object on the left of the '/' sign. The number being divided
+ * @param right, the object on the right of the '/' sign. The number being divided into
+ * @return Big, an object storing the result
+ */
 Big operator/(const Big& left, const Big& right){
     if(left.negative || right.negative){
         Big lCopy = left;

@@ -457,7 +457,7 @@ Big operator*(const Big& left, const Big& right){
  * @return Big, an object storing the result
  */
 Big operator/(const Big& left, const Big& right){
-    if(left.negative || right.negative){
+    if(left.negative || right.negative){ // Accordingly flips the signs and recalls the division function
         Big lCopy = left;
         Big rCopy = right;
         if(left.negative){
@@ -472,30 +472,30 @@ Big operator/(const Big& left, const Big& right){
         }
         return answer;
     }
-    if(right > left){
+    if(right > left){ // If the divisor is larger than the divided, it can't possibly be greater than 0
         return 0;
-    } else if (right == left){
+    } else if (right == left){ // If they are equal, it must be 1
         return 1;
     } else {
         Big check = right;
         Big divisor = 0;
         Big counter = 0;
-        Big power = 1;
-        while(check < left){
+        Big power = 1; // Used for tracking the number of the value being worked with
+        while(check < left){ // Finds the largest value such that check * 10^x is smaller than the left object
             check.appendDigit(); // Multiplies by 10
             power.appendDigit();
         }
-        check.truncate();
+        check.truncate(); // Power of 10 is one higher than it should be, so these fix it
         power.truncate();
-        while(check >= right){
-            std::cout << "Check: " << check << std::endl;
-            while(divisor + check <= left){
+        while(check >= right){ // Ensures that check is never less than the original divisor
+            // std::cout << "Check: " << check << std::endl;
+            while(divisor + check <= left){ // Continues while the working value is less than the divided
                 
-                divisor = divisor + check;
+                divisor = divisor + check; // Adds 10^power copies of left to the divispr 
                 counter = counter + power;
-                std::cout << "Divisor: " << divisor << std::endl;
+                // std::cout << "Divisor: " << divisor << std::endl;
             }
-            power.truncate();
+            power.truncate(); // Divides each value by 10
             check.truncate();
         }
         return counter;

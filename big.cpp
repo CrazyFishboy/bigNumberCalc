@@ -949,7 +949,11 @@ void Big::appendDigit(int num){
 }
 
 
-
+/**
+ * @brief Changes the size of the array, effectively dividing by 10^num
+ * 
+ * @param num, How much to decrease size by
+ */
 void Big::truncate(int num){
     if(size <= num){
         size = 0;

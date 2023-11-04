@@ -139,8 +139,7 @@ int Big::getDigit(int index) const {
     if(index >= 0 && index < size){ // Ensures that the index is within the bounds of the array
         return digits[index];
     } else {
-        std::cout << "Index out of bounds" << std::endl;
-        exit(1);
+        throw OutOfBounds();
     }
 }
 
@@ -176,12 +175,10 @@ int& Big::operator[ ](int index){
         if(index >= 0 && index < size){ // Ensures the bounds of the array are not exceeded
             return digits[index];
         } else {
-            std::cout << "Index out of bounds" << std::endl;
-            exit(1);
+            throw OutOfBounds();
         }
     } else {
-            std::cout << "Size is 0" << std::endl;
-            exit(1);
+            throw EmptyArray();
     }
 }
 

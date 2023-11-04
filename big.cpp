@@ -34,11 +34,10 @@ Big::Big(std::string val){
                 if(val[i] == '-' && !negative){
                     negative = true;
                 } else {
-                    std::cout << val[i] << " is not a digit, setting value to 0" << std::endl;
                     size = 1;
                     negative = false;
                     digits = new int [capacity] {0};
-                    return;
+                    throw InvalidCharacter();
                 }
             } else {
                 if(!nonZeroFound){
@@ -96,6 +95,7 @@ Big::Big(const Big& right) {
         capacity = capacityIncrement;
         negative = false;
         digits = new int [capacity] {0};
+        throw EmptyArray();
     }
 }
 

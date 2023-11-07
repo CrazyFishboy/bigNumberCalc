@@ -14,6 +14,8 @@
 
 #include "big.h"
 
+void printComparisons(const test& t1, const test& t2);
+
 
 int main() {
 
@@ -25,24 +27,7 @@ int main() {
     std::cout << test << " Size: " << test.getSize() << " Capacity: " << test.getCapacity() << " Negative?: " << test.isNegative() << std::endl;
     std::cout << test2 << " Size: " << test2.getSize() << " Capacity: " << test2.getCapacity() << " Negative?: " << test2.isNegative() << std::endl;
 
-    if(test == test2){
-        std::cout << "They are equal" << std::endl;
-    }
-    if(test != test2){
-        std::cout << "They are not equal" << std::endl;
-    }
-    if(test > test2){
-        std::cout << "Test 1 is greater than test 2" << std::endl;
-    }
-    if(test < test2){
-        std::cout << "Test 1 is less than test 2" << std::endl;
-    }
-    if(test >= test2){
-        std::cout << "Test 1 is greater than or equal to test 2" << std::endl;
-    }
-    if(test <= test2){
-        std::cout << "Test 1 is less than or equal to test 2" << std::endl;
-    }
+    printComparisons(test1,test2);
 
     
     std::cout << test.getValue() << " Size: " << test.getSize() << " Capacity: " << test.getCapacity() << " Negative?: " << test.isNegative() << std::endl;
@@ -56,4 +41,26 @@ int main() {
     // std::cout << "Expected: " << num1 / num2 << std::endl;
     
     return 0;
+}
+
+
+void printComparisons(const test& t1, const test& t2){
+    if(t1 == t2){
+        std::cout << "They are equal" << std::endl;
+    }
+    if(t1 != t2){
+        std::cout << "They are not equal" << std::endl;
+    }
+    if(t1 > t2){
+        std::cout << "Test 1 is greater than test 2" << std::endl;
+    }
+    if(t1 < t2){
+        std::cout << "Test 1 is less than test 2" << std::endl;
+    }
+    if(t1 >= t2){
+        std::cout << "Test 1 is greater than or equal to test 2" << std::endl;
+    }
+    if(t1 <= t2){
+        std::cout << "Test 1 is less than or equal to test 2" << std::endl;
+    }
 }

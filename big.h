@@ -21,6 +21,7 @@
 class Big {
 
 public:
+    
 
     static int capacityIncrement;
 
@@ -67,6 +68,12 @@ public:
     void add(const Big& right); // Does addition just like addition operator
 
     void displayArray(); // Temporary for debugging
+
+    // Exceptions
+    class DivideByZero {};
+    class EmptyArray {};
+    class OutOfBounds {};
+    class InvalidCharacter {};
 
 protected:
     void addDigit(int num = 1); // Increases the size of the array by one at the beginning

@@ -34,11 +34,10 @@ Big::Big(std::string val){
                 if(val[i] == '-' && !negative){
                     negative = true;
                 } else {
-                    std::cout << val[i] << " is not a digit, setting value to 0" << std::endl;
                     size = 1;
                     negative = false;
                     digits = new int [capacity] {0};
-                    return;
+                    throw InvalidCharacter();
                 }
             } else {
                 if(!nonZeroFound){
@@ -96,6 +95,7 @@ Big::Big(const Big& right) {
         capacity = capacityIncrement;
         negative = false;
         digits = new int [capacity] {0};
+        throw EmptyArray();
     }
 }
 
@@ -139,8 +139,7 @@ int Big::getDigit(int index) const {
     if(index >= 0 && index < size){ // Ensures that the index is within the bounds of the array
         return digits[index];
     } else {
-        std::cout << "Index out of bounds" << std::endl;
-        exit(1);
+        throw OutOfBounds();
     }
 }
 
@@ -176,12 +175,10 @@ int& Big::operator[ ](int index){
         if(index >= 0 && index < size){ // Ensures the bounds of the array are not exceeded
             return digits[index];
         } else {
-            std::cout << "Index out of bounds" << std::endl;
-            exit(1);
+            throw OutOfBounds();
         }
     } else {
-            std::cout << "Size is 0" << std::endl;
-            exit(1);
+            throw EmptyArray();
     }
 }
 
@@ -339,8 +336,7 @@ Big operator-(const Big& left, const Big& right){
                         int counter = 1;
                         while(val[indexL - counter] == 0){ // Determines how many places over to go
                             if(indexL - counter == 0 && val[indexL - counter] == 0){
-                                std::cout << "Subtraction error: " << val << " - " << right << std::endl;
-                                exit(1);
+                                throw Big::OutOfBounds();
                             }
                             ++counter;
                         }
@@ -565,8 +561,7 @@ Big& Big::operator--(){
             int counter = 1;
             while(digits[index - counter] == 0){ // Determines how many places over to go
                 if(index - counter == 0 && digits[index - counter] == 0){
-                    std::cout << "Subtraction error: " << *this << "-- " << std::endl;
-                    exit(1);
+                    throw OutOfBounds();
                 }
                 ++counter;
             }
@@ -592,9 +587,9 @@ Big& Big::operator--(){
         for(int i = 0; i < size; ++i, ++index){
             digits[i] = digits[index];
         }
+        return *this;
     } else {
-        std::cout << "Object has no value" << std::endl;
-        exit(1);
+        throw EmptyArray();
     }
 }
 

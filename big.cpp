@@ -336,8 +336,7 @@ Big operator-(const Big& left, const Big& right){
                         int counter = 1;
                         while(val[indexL - counter] == 0){ // Determines how many places over to go
                             if(indexL - counter == 0 && val[indexL - counter] == 0){
-                                std::cout << "Subtraction error: " << val << " - " << right << std::endl;
-                                exit(1);
+                                throw Big::OutOfBounds();
                             }
                             ++counter;
                         }
@@ -562,8 +561,7 @@ Big& Big::operator--(){
             int counter = 1;
             while(digits[index - counter] == 0){ // Determines how many places over to go
                 if(index - counter == 0 && digits[index - counter] == 0){
-                    std::cout << "Subtraction error: " << *this << "-- " << std::endl;
-                    exit(1);
+                    throw OutOfBounds();
                 }
                 ++counter;
             }
@@ -589,9 +587,9 @@ Big& Big::operator--(){
         for(int i = 0; i < size; ++i, ++index){
             digits[i] = digits[index];
         }
+        return *this;
     } else {
-        std::cout << "Object has no value" << std::endl;
-        exit(1);
+        throw EmptyArray();
     }
 }
 

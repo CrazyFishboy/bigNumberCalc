@@ -14,7 +14,7 @@
 
 #include "big.h"
 
-void printComparisons(const test& t1, const test& t2);
+void printComparisons(const Big& t1, const Big& t2);
 
 
 int main() {
@@ -22,20 +22,20 @@ int main() {
     long long num1 = 100000000000;
     int num2 = 9;
 
-    Big test("1000000000000000000000000000000");
+    Big test1("1000000000000000000000000000000");
     Big test2("9");
-    std::cout << test << " Size: " << test.getSize() << " Capacity: " << test.getCapacity() << " Negative?: " << test.isNegative() << std::endl;
+    std::cout << test1 << " Size: " << test1.getSize() << " Capacity: " << test1.getCapacity() << " Negative?: " << test1.isNegative() << std::endl;
     std::cout << test2 << " Size: " << test2.getSize() << " Capacity: " << test2.getCapacity() << " Negative?: " << test2.isNegative() << std::endl;
 
     printComparisons(test1,test2);
 
     
-    std::cout << test.getValue() << " Size: " << test.getSize() << " Capacity: " << test.getCapacity() << " Negative?: " << test.isNegative() << std::endl;
+    std::cout << test1.getValue() << " Size: " << test1.getSize() << " Capacity: " << test1.getCapacity() << " Negative?: " << test1.isNegative() << std::endl;
 
-    test = test / test2; // Should be 30 1's
+    test1 = test1 / test2; // Should be 30 1's
 
-    std::cout << "Calculated: " << test.getValue() << " Size: " << test.getSize() 
-        << " Capacity: " << test.getCapacity() << " Negative?: " << test.isNegative() << std::endl;
+    std::cout << "Calculated: " << test1.getValue() << " Size: " << test1.getSize() 
+        << " Capacity: " << test1.getCapacity() << " Negative?: " << test1.isNegative() << std::endl;
     
     // std::cout << "Calculated: " << test << std::endl; 
     // std::cout << "Expected: " << num1 / num2 << std::endl;
@@ -44,7 +44,7 @@ int main() {
 }
 
 
-void printComparisons(const test& t1, const test& t2){
+void printComparisons(const Big& t1, const Big& t2){
     if(t1 == t2){
         std::cout << "They are equal" << std::endl;
     }

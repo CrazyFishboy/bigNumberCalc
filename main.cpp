@@ -32,14 +32,18 @@ int main() {
     
     //std::cout << test1.getValue() << " Size: " << test1.getSize() << " Capacity: " << test1.getCapacity() << " Negative?: " << test1.isNegative() << std::endl;
 
-    test1 = test1 % test2;
+    //test1 = test1 % test2;
 
-    std::cout << "Calculated: " << test1.getValue() << " Size: " << test1.getSize() 
-        << " Capacity: " << test1.getCapacity() << " Negative?: " << test1.isNegative() << std::endl;
+    //std::cout << "Calculated: " << test1.getValue() << " Size: " << test1.getSize() 
+    //    << " Capacity: " << test1.getCapacity() << " Negative?: " << test1.isNegative() << std::endl;
     
     // std::cout << "Calculated: " << test << std::endl; 
     // std::cout << "Expected: " << num1 / num2 << std::endl;
+    
 
+    test1.setBase(16);
+    test1.showBase();
+    std::cout << test1 << std::endl;
 
     
     return 0;

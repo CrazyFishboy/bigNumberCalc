@@ -1012,3 +1012,38 @@ void Big::displayArray(){
     }
     std::cout << std::endl;
 }
+
+
+
+bool Big::setBase(int base){
+    if(base == bin){
+        this->base = bin;
+        std::cout << "Base is now " << bin << std::endl;
+        return true;
+    } else if(base == oct){
+        this->base = oct;
+        std::cout << "Base is now " << oct << std::endl;
+        return true;
+    } else if(base == dec){
+        this->base = dec;
+        std::cout << "Base is now " << dec << std::endl;
+        return true;
+    } else if(base == hex){
+        this->base = hex;
+        std::cout << "Base is now " << hex << std::endl;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+void Big::showBase(){
+
+}
+
+
+void Big::hideBase(){
+
+}
+

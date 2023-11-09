@@ -75,6 +75,7 @@ public:
     int getBase() const { return base; }
     void showBase();
     void hideBase();
+    bool baseShown() const { return displayBase; }
 
     // Exceptions
     class DivideByZero {};

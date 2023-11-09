@@ -1066,3 +1066,48 @@ bool Big::setBase(int base){
 
 
 
+std::string Big::binary() const{
+    std::string value = "";
+    Big twos(1);
+    std::stack<Big> powers;
+    Big check(*this);
+    if(check.isNegative()){
+        check.flipSign();
+        value = "-";
+    }
+    while(twos <= check){
+        powers.push(twos);
+        twos = twos * 2;
+    }
+
+    while(!powers.empty()){
+        if(powers.top() <= check){
+            check = check - powers.top();
+            value = value + "1";
+            powers.pop();
+        } else {
+            value = value + "0";
+            powers.pop();
+        }
+    }
+
+    if(value.empty() || value == "-"){
+        return "0";
+    } else {
+        return value;
+    }
+}
+
+
+std::string Big::octal() const{
+    return binary();
+}
+
+
+std::string Big::hexadecimal() const{
+    return binary();
+}
+
+
+
+

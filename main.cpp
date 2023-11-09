@@ -22,7 +22,7 @@ int main() {
     //long long num1 = 11;
     //int num2 = 9;
 
-    Big test1("47");
+    Big test1("-0");
     Big test2("18");
     std::cout << test1 << " Size: " << test1.getSize() << " Capacity: " << test1.getCapacity() << " Negative?: " << test1.isNegative() << std::endl;
     std::cout << test2 << " Size: " << test2.getSize() << " Capacity: " << test2.getCapacity() << " Negative?: " << test2.isNegative() << std::endl;
@@ -41,9 +41,8 @@ int main() {
     // std::cout << "Expected: " << num1 / num2 << std::endl;
     
 
-    test1.setBase(16);
-    test1.showBase();
-    std::cout << test1 << std::endl;
+
+    std::cout << test1.binary() << std::endl;
 
     
     return 0;

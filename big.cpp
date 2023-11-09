@@ -499,6 +499,54 @@ Big operator/(const Big& left, const Big& right){
 }
 
 
+
+Big operator%(const Big& left, const Big& right){
+    if(left.negative || right.negative){ // Accordingly flips the signs and recalls the division function
+        Big lCopy = left;
+        Big rCopy = right;
+        if(left.negative){
+            lCopy.flipSign();
+        }
+        if(right.negative){
+            rCopy.flipSign();
+        }
+        Big answer = lCopy / rCopy;
+        if(!(left.negative && right.negative)){
+            answer.flipSign();
+        }
+        return answer;
+    }
+    if(right > left){ 
+        return left;
+    } else if (right == left){ 
+        return 0;
+    } else {
+        Big check = right;
+        Big divisor = 0;
+        Big counter = 0;
+        Big power = 1; // Used for tracking the number of the value being worked with
+        while(check < left){ // Finds the largest value such that check * 10^x is smaller than the left object
+            check.appendDigit(); // Multiplies by 10
+            power.appendDigit();
+        }
+        check.truncate(); // Power of 10 is one higher than it should be, so these fix it
+        power.truncate();
+        while(check >= right){ // Ensures that check is never less than the original divisor
+            // std::cout << "Check: " << check << std::endl;
+            while(divisor + check <= left){ // Continues while the working value is less than the divided
+                
+                divisor = divisor + check; // Adds 10^power copies of left to the divispr 
+                counter = counter + power;
+                // std::cout << "Divisor: " << divisor << std::endl;
+            }
+            power.truncate(); // Divides each value by 10
+            check.truncate();
+        }
+        return left - divisor;
+    }
+}
+
+
 /**
  * @brief Overloaded prefix ++ operator. Increases the total value of the digits array
  * by 1, starting from the last element

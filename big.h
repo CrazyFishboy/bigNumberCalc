@@ -17,6 +17,7 @@
 
 #include <string>
 #include <iostream>
+#include <stack>
 
 class Big {
 
@@ -71,11 +72,15 @@ public:
 
     void displayArray(); // Temporary for debugging
 
+    // Base change functions
     bool setBase(int base);
     int getBase() const { return base; }
     void showBase() { displayBase = true; }
     void hideBase() { displayBase = false; }
     bool baseShown() const { return displayBase; }
+    std::string binary() const;
+    std::string octal() const;
+    std::string hexadecimal() const;
 
     // Exceptions
     class DivideByZero {};

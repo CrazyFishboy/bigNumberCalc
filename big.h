@@ -24,7 +24,7 @@ public:
     
 
     static int capacityIncrement;
-    const enum {bin = 2, oct = 8, dec = 10, hex = 16};
+    enum {bin = 2, oct = 8, dec = 10, hex = 16};
 
     // Constructors and Destructors
     Big() : Big("0") {}

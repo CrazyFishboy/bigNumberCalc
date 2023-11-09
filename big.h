@@ -23,6 +23,9 @@ class Big {
 
 public:
     
+    const static std::string hexConvert[16];
+    const static std::string octConvert[16];
+    const static char characters[16];
 
     static int capacityIncrement;
     enum {bin = 2, oct = 8, dec = 10, hex = 16};

@@ -73,8 +73,8 @@ public:
 
     bool setBase(int base);
     int getBase() const { return base; }
-    void showBase();
-    void hideBase();
+    void showBase() { displayBase = true; }
+    void hideBase() { displayBase = false; }
     bool baseShown() const { return displayBase; }
 
     // Exceptions

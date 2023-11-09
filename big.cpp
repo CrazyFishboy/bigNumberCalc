@@ -25,6 +25,8 @@ Big::Big(std::string val){
     capacity = capacityIncrement;
     digits = nullptr;
     negative = false;
+    base = dec;
+    displayBase = false;
     if(val.size() > 0){ // Makes sure that val is non-empty
         // Loops through each character in val, making sure that they are all digits
         bool nonZeroFound = false;
@@ -76,6 +78,8 @@ Big::Big(std::string val){
 Big::Big(const Big& right) {
     int rightSize = right.getSize();
     if(rightSize > 0){ // Makes sure that the right object has some value
+        base = right.getBase();
+        base = right.baseShown();
 
         // Set this-> size to that of the right object and dynamically allocate a new array
         size = rightSize;
@@ -95,6 +99,8 @@ Big::Big(const Big& right) {
         capacity = capacityIncrement;
         negative = false;
         digits = new int [capacity] {0};
+        base = dec;
+        displayBase = false;
         throw EmptyArray();
     }
 }
@@ -152,6 +158,27 @@ int Big::getDigit(int index) const {
  * @return std::ostream&, the same ostream object being modified
  */
 std::ostream& operator<<(std::ostream& out, const Big& object){
+    if(object.getBase() == Big::bin){
+        std::cout << "Binary conversion not finished. ";
+        if(object.baseShown()){
+            out << "0b";
+        }
+    } else if(object.getBase() == Big::oct){
+        std::cout << "Octal conversion not finished. ";
+        if(object.baseShown()){
+            out << "0";
+        }
+    } else if(object.getBase() == Big::hex){
+        std::cout << "Hexadecimal conversion not finished. ";
+        if(object.baseShown()){
+            out << "0x";
+        }
+    }
+
+
+
+
+
     // Adds each value in digits to the ostream
     if(object.isNegative()){
         out << "-";
@@ -1038,12 +1065,4 @@ bool Big::setBase(int base){
 }
 
 
-void Big::showBase(){
-
-}
-
-
-void Big::hideBase(){
-
-}
 

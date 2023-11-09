@@ -19,26 +19,28 @@ void printComparisons(const Big& t1, const Big& t2);
 
 int main() {
 
-    long long num1 = 100000000000;
-    int num2 = 9;
+    //long long num1 = 11;
+    //int num2 = 9;
 
-    Big test1("1000000000000000000000000000000");
-    Big test2("9");
+    Big test1("47");
+    Big test2("18");
     std::cout << test1 << " Size: " << test1.getSize() << " Capacity: " << test1.getCapacity() << " Negative?: " << test1.isNegative() << std::endl;
     std::cout << test2 << " Size: " << test2.getSize() << " Capacity: " << test2.getCapacity() << " Negative?: " << test2.isNegative() << std::endl;
 
     printComparisons(test1,test2);
 
     
-    std::cout << test1.getValue() << " Size: " << test1.getSize() << " Capacity: " << test1.getCapacity() << " Negative?: " << test1.isNegative() << std::endl;
+    //std::cout << test1.getValue() << " Size: " << test1.getSize() << " Capacity: " << test1.getCapacity() << " Negative?: " << test1.isNegative() << std::endl;
 
-    test1 = test1 / test2; // Should be 30 1's
+    test1 = test1 % test2;
 
     std::cout << "Calculated: " << test1.getValue() << " Size: " << test1.getSize() 
         << " Capacity: " << test1.getCapacity() << " Negative?: " << test1.isNegative() << std::endl;
     
     // std::cout << "Calculated: " << test << std::endl; 
     // std::cout << "Expected: " << num1 / num2 << std::endl;
+
+
     
     return 0;
 }

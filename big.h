@@ -95,6 +95,7 @@ private:
     int capacity; // Number of digits storable in array
     bool negative; // If the number is negative
     int base; // The base to display the number in
+    bool showBase; // If the base should be displayed
 
 
 

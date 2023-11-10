@@ -7,10 +7,10 @@ Still in development...
 Will utilize a dynamically allocated array of integers in order to store extremely large numbers.
 In theory, it will be able to store a number of 2^64 -1 digits in length.
 
-Currently supports addition, subtraction, and multiplication of these numbers. Additional planned features:
-  division
+Currently supports addition, subtraction, multiplication, and division of these numbers. Additional planned features:
   floating point
-  different number bases
+
+Can also return or display values in binary, octal, or hexadecimal.
 
 Current steps to run:
 

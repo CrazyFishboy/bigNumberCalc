@@ -41,9 +41,12 @@ int main() {
     // std::cout << "Expected: " << num1 / num2 << std::endl;
     
 
+    std::cout << test1 << std::endl;
 
-    std::cout << test1.binary() << std::endl;
-    std::cout << test1.octal() << std::endl;
+    test1.showBase();
+    test1.setBase(Big::hex);
+
+    std::cout << test1.getValue() << std::endl;
 
     
     return 0;

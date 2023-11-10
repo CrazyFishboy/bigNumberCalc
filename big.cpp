@@ -126,10 +126,29 @@ std::string Big::getValue() const {
         if(negative){
             value = "-";
         }
-        // Adds each value to the string to be returned
+
+
+        if(base == Big::bin){ //binary
+        if(displayBase){
+            value += "0b";
+        }
+        value += binary();
+    } else if(base == Big::oct){ // octal
+        if(displayBase){
+            value += "0";
+        }
+        value += octal();
+    } else if(base == Big::hex){ // hexadecimal
+        if(displayBase){
+            value += "0x";
+        }
+        value += hexadecimal();
+    } else { // decimal
         for(int i = 0; i < size; ++i){
             value += std::to_string(digits[i]);
         }
+    }
+        
         return value;
     } else { return "0"; }
 }
@@ -1042,19 +1061,15 @@ void Big::displayArray(){
 bool Big::setBase(int base){
     if(base == bin){
         this->base = bin;
-        std::cout << "Base is now " << bin << std::endl;
         return true;
     } else if(base == oct){
         this->base = oct;
-        std::cout << "Base is now " << oct << std::endl;
         return true;
     } else if(base == dec){
         this->base = dec;
-        std::cout << "Base is now " << dec << std::endl;
         return true;
     } else if(base == hex){
         this->base = hex;
-        std::cout << "Base is now " << hex << std::endl;
         return true;
     } else {
         return false;

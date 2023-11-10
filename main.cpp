@@ -22,7 +22,7 @@ int main() {
     //long long num1 = 11;
     //int num2 = 9;
 
-    Big test1("-0");
+    Big test1("256");
     Big test2("18");
     std::cout << test1 << " Size: " << test1.getSize() << " Capacity: " << test1.getCapacity() << " Negative?: " << test1.isNegative() << std::endl;
     std::cout << test2 << " Size: " << test2.getSize() << " Capacity: " << test2.getCapacity() << " Negative?: " << test2.isNegative() << std::endl;
@@ -43,6 +43,7 @@ int main() {
 
 
     std::cout << test1.binary() << std::endl;
+    std::cout << test1.hexadecimal() << std::endl;
 
     
     return 0;

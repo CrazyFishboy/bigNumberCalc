@@ -43,7 +43,7 @@ int main() {
 
 
     std::cout << test1.binary() << std::endl;
-    std::cout << test1.hexadecimal() << std::endl;
+    std::cout << test1.octal() << std::endl;
 
     
     return 0;

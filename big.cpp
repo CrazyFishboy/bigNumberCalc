@@ -1100,7 +1100,38 @@ std::string Big::binary() const{
 
 
 std::string Big::octal() const{
-    return binary();
+    {
+    const std::string convert[2][8] = {{"000","001","010","011","100","101","110","111"},
+                                       {"0","1","2","3","4","5","6","7"}};
+    std::string value = binary();
+    if(value[0] == '-'){
+        value = value.substr(1);
+    }
+
+    std::string nibble;
+    int padding = 3 - (value.size() % 3);
+    if(padding != 3){
+        for(int i = 0; i < padding; ++i){
+            value = "0" + value;
+        }
+    }
+
+    std::string hex = "";
+
+    for(unsigned i = 0; i < value.size() - 2; i += 3){
+        nibble = value.substr(i,3);
+        for(int j = 0; j < 8; ++j){
+            if(nibble == convert[0][j]){
+                hex = hex + convert[1][j];
+                break;
+            }
+        }
+    }
+
+    return hex;
+
+
+}
 }
 
 

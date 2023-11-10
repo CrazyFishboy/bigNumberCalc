@@ -158,33 +158,30 @@ int Big::getDigit(int index) const {
  * @return std::ostream&, the same ostream object being modified
  */
 std::ostream& operator<<(std::ostream& out, const Big& object){
-    if(object.getBase() == Big::bin){
-        std::cout << "Binary conversion not finished. ";
-        if(object.baseShown()){
-            out << "0b";
-        }
-    } else if(object.getBase() == Big::oct){
-        std::cout << "Octal conversion not finished. ";
-        if(object.baseShown()){
-            out << "0";
-        }
-    } else if(object.getBase() == Big::hex){
-        std::cout << "Hexadecimal conversion not finished. ";
-        if(object.baseShown()){
-            out << "0x";
-        }
-    }
 
-
-
-
-
-    // Adds each value in digits to the ostream
     if(object.isNegative()){
         out << "-";
     }
-    for(int i = 0; i < object.size; ++i){
-        out << object.digits[i];
+
+    if(object.getBase() == Big::bin){ //binary
+        if(object.baseShown()){
+            out << "0b";
+        }
+        out << object.binary();
+    } else if(object.getBase() == Big::oct){ // octal
+        if(object.baseShown()){
+            out << "0";
+        }
+        out << object.octal();
+    } else if(object.getBase() == Big::hex){ // hexadecimal
+        if(object.baseShown()){
+            out << "0x";
+        }
+        out << object.hexadecimal();
+    } else { // decimal
+        for(int i = 0; i < object.size; ++i){
+            out << object.digits[i];
+        }
     }
     return out;
 }

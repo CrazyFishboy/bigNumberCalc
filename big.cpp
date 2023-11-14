@@ -1080,25 +1080,25 @@ bool Big::setBase(int base){
 
 std::string Big::binary() const{
     std::string value = "";
-    Big twos(1);
-    std::stack<Big> powers;
-    Big check(*this);
+    Big twos(1); // The largest power of 2 that is less than the value of the object
+    std::stack<Big> powers; // Stack of every power of 2 up to and including twos
+    Big check(*this); // The value of this object being checked
     if(check.isNegative()){
         check.flipSign();
         value = "-";
     }
     while(twos <= check){
-        powers.push(twos);
+        powers.push(twos); // Adds each power of two until they are bigger than check
         twos = twos * 2;
     }
 
-    while(!powers.empty()){
-        if(powers.top() <= check){
-            check = check - powers.top();
-            value = value + "1";
+    while(!powers.empty()){ // Loops through every power of 2
+        if(powers.top() <= check){ // If the power of two is less than check
+            check = check - powers.top(); // Subtract it from check
+            value = value + "1"; // Add 1 to the binary representation
             powers.pop();
-        } else {
-            value = value + "0";
+        } else { // Otherwise
+            value = value + "0"; // Add 0 to the binary representation
             powers.pop();
         }
     }

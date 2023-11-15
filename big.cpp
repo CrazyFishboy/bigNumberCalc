@@ -1059,16 +1059,16 @@ void Big::displayArray(){
 
 
 bool Big::setBase(int base){
-    if(base == bin){
+    if(base == bin){ // Binary
         this->base = bin;
         return true;
-    } else if(base == oct){
+    } else if(base == oct){ // Octal
         this->base = oct;
         return true;
-    } else if(base == dec){
+    } else if(base == dec){ // Decimal
         this->base = dec;
         return true;
-    } else if(base == hex){
+    } else if(base == hex){ // Hexadecimal
         this->base = hex;
         return true;
     } else {
@@ -1077,7 +1077,7 @@ bool Big::setBase(int base){
 }
 
 
-
+// Returns a string of the Binary representation of the value
 std::string Big::binary() const{
     std::string value = "";
     Big twos(1); // The largest power of 2 that is less than the value of the object
@@ -1111,7 +1111,8 @@ std::string Big::binary() const{
 }
 
 
-std::string Big::octal() const{
+// Returns a string of the octal representation of the value
+std::string Big::octal() const{ 
     {
     const std::string convert[2][8] = {{"000","001","010","011","100","101","110","111"},
                                        {"0","1","2","3","4","5","6","7"}};
@@ -1146,7 +1147,7 @@ std::string Big::octal() const{
 }
 }
 
-
+// Returns a string of the Hexadecimal representation of the value
 std::string Big::hexadecimal() const{
     const std::string convert[2][16] = {{"0000","0001","0010","0011","0100","0101","0110","0111","1000","1001","1010","1011","1100","1101","1110","1111"},
                                        {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"}};
